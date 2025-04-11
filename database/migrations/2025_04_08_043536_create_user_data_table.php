@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nomor_hp', 14);
             $table->string('alamat');
-            $table->string('status');
-            $table->integer('saldo');
+            $table->integer('saldo')->default(0);
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

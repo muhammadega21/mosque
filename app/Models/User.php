@@ -46,5 +46,8 @@ class User extends Authenticatable
         ];
     }
 
-    protected $table = 'user';
+    public function user_data()
+    {
+        return $this->hasOne(UserData::class);
+    }
 }

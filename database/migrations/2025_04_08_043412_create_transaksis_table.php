@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status_transaksi', ['selesai', 'pending', 'batal'])->default('pending');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('laporan_id');
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('laporan_id')->references('id')->on('laporan_keuangan');
             $table->timestamps();
         });

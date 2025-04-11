@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('laporan_periodik', ['hari', 'minggu', 'bulan']);
             $table->integer('total_uang');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
