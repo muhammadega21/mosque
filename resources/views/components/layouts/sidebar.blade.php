@@ -62,13 +62,13 @@
 
 
         <li class="nav-heading">Setting</li>
-
+        {{-- 
         <li class="nav-item">
             <a class="nav-link collapsed {{ Request::is('profile') ? 'active' : '' }}" href="{{ url('profile') }}">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>
-        </li>
+        </li> --}}
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ url('/logout') }}" onclick="confirmLogout(event)">

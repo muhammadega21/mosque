@@ -6,5 +6,5 @@ use Illuminate\Http\Request;
 
 class LaporanKeuanganController extends Controller
 {
-    //
+    // crud laporan keuangan
 }

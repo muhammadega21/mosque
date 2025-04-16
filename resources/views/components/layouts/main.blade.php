@@ -36,7 +36,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
@@ -86,8 +85,6 @@
     {{-- <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script> --}}
 
     {{-- CDN --}}
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- Template Main JS File -->
@@ -95,6 +92,10 @@
 
     <!-- My JS File -->
     <script src="{{ asset('js/script.js') }}"></script>
+
+    @canany(['pengurus'])
+        <script src="{{ asset('js/admin.js') }}"></script>
+    @endcanany
 </body>
 
 </html>

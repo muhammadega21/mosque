@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Auth
@@ -16,4 +17,10 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::controller(UserController::class)->group(function () {
+        Route::get('jamaah', 'index')->name('jamaah');
+        Route::post('jamaah', 'store');
+        Route::put('jamaah/update/{id}', 'update');
+        Route::get('jamaah/delete/{id}',  'destroy');
+    });
 });
