@@ -1,4 +1,9 @@
 <x-layouts.main :title="$title" :mainPage="$main_page" :page="$page">
+    @if (Session::has('toastSuccess'))
+        <script>
+            toastr.success("{{ Session::get('toastSuccess') }}");
+        </script>
+    @endif
     <!-- Left side columns -->
     <div class="col-lg-8">
         <div class="row">

@@ -1,4 +1,3 @@
-@canany(['pengurus'])
     <div class="modal fade" id="{{ $modalID }}" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -20,4 +19,3 @@
             </div>
         </div>
     </div>
-@endcanany

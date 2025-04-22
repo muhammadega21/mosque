@@ -14,15 +14,20 @@ class Transaksi extends Model
         'keterangan',
         'status_transaksi',
         'user_id',
-        'laporan_id'
+        'kategori_id'
     ];
+    protected $with = ['user', 'laporan', 'kategori'];
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
     public function laporan()
     {
-        return $this->belongsTo(LaporanKeuangan::class, 'laporan_id');
+        return $this->belongsTo(LaporanKeuangan::class);
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
     }
 }

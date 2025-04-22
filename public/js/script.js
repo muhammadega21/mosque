@@ -1,13 +1,3 @@
-// Select2
-$(document).ready(function () {
-    const parent = $(".select2").data("parent");
-
-    $(".select2").select2({
-        theme: "bootstrap",
-        dropdownParent: $("#" + parent),
-    });
-});
-
 $(document).ready(function () {
     $(document).on("keyup", ".search-table", function () {
         const searchText = $(this).val().toLowerCase();

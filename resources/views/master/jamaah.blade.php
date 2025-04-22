@@ -19,6 +19,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>No HP</th>
                                     <th>Alamat</th>
@@ -33,6 +34,7 @@
                                 @else
                                     @foreach ($jamaah as $item)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->user_data->nama }}</td>
                                             <td>{{ $item->user_data->nomor_hp }}</td>
                                             <td>{{ $item->user_data->alamat }}</td>
@@ -56,14 +58,14 @@
                                             action="" method="POST" method2="PUT" enctype="">
                                             <div class="row mb-3">
                                                 <div class="input-box col-sm-12">
-                                                    <label for="nama" class=" mb-2">Nama</label>
+                                                    <label for="nama2" class=" mb-2 required">Nama</label>
                                                     <input type="text" id="nama2" class="form-control"
                                                         name="nama" placeholder="Masukkan Nama">
                                                 </div>
 
                                                 <div class="mt-3">
                                                     <div class="input-box col-sm-12">
-                                                        <label for="nomor_hp" class="mb-2 required">Nomor HP</label>
+                                                        <label for="nomor_hp2" class="mb-2 required">Nomor HP</label>
                                                         <input type="number" id="nomor_hp2" class="form-control "
                                                             name="nomor_hp" placeholder="Masukkan Nomor HP">
 
@@ -71,7 +73,7 @@
                                                 </div>
                                                 <div class="mt-3">
                                                     <div class="input-box col-sm-12">
-                                                        <label for="alamat" class="mb-2 required">Alamat</label>
+                                                        <label for="alamat2" class="mb-2 required">Alamat</label>
                                                         <textarea class="form-control " placeholder="Masukkan Alamat" id="alamat2" name="alamat"></textarea>
                                                     </div>
                                                 </div>
@@ -105,7 +107,7 @@
                     @enderror
                 </div>
                 <div class="input-box col-sm-6" style="max-width: 48%">
-                    <label for="nama" class=" mb-2">Nama</label>
+                    <label for="nama" class=" mb-2 required">Nama</label>
                     <input type="text" id="nama" class="form-control @error('nama') is-invalid @enderror"
                         name="nama" placeholder="Masukkan Nama" value="{{ old('nama') }}">
                     @error('nama')
@@ -127,7 +129,7 @@
                     @enderror
                 </div>
                 <div class="input-box col-sm-6" style="max-width: 48%">
-                    <label for="confirm_password" class=" mb-2">Confirm Password</label>
+                    <label for="confirm_password" class=" mb-2 required">Confirm Password</label>
                     <input type="password" id="confirm_password"
                         class="form-control @error('confirm_password') is-invalid @enderror" name="confirm_password"
                         placeholder="Confirm Password" value="{{ old('confirm_password') }}">

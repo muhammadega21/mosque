@@ -13,16 +13,22 @@
         <li class="nav-heading">Pages</li>
         @can('pengurus')
             <li class="nav-item">
-                <a class="nav-link  {{ Request::is(['jamaah', 'keuangan']) ? 'active' : 'collapsed' }}"
+                <a class="nav-link  {{ Request::is(['jamaah', 'kategori', 'keuangan', 'laporan_keuangan', 'kegiatan_masjid', 'informasi_masjid']) ? 'active' : 'collapsed' }}"
                     data-bs-target="#master-data" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="master-data" class="nav-content collapse {{ Request::is(['jamaah*', 'keuangan*']) ? 'show' : '' }}"
+                <ul id="master-data"
+                    class="nav-content collapse {{ Request::is(['jamaah*', 'kategori*', 'keuangan*', 'laporan_keuangan*', 'kegiatan_masjid*', 'informasi_masjid*']) ? 'show' : '' }}"
                     data-bs-parent="#sidebar-nav">
 
                     <li>
                         <a href="{{ url('jamaah') }}" class="{{ Request::is('jamaah') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Data Jamaah</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('kategori') }}" class="{{ Request::is('kategori') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Data Kategori</span>
                         </a>
                     </li>
                     <li>

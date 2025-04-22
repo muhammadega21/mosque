@@ -14,9 +14,9 @@ class UserController extends Controller
     public function index()
     {
         return view('master.jamaah', [
-            'title' => "Dashboard",
+            'title' => "Jamaah",
             'main_page' => '',
-            'page' => 'Dashboard',
+            'page' => 'Jamaah',
             'jamaah' => User::where('role', 'jamaah')->get(),
         ]);
     }

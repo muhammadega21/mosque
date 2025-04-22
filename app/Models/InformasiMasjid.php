@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class InformasiMasjid extends Model
 {
     protected $table = 'informasi_masjid';
+    protected $with = ['user'];
 
     protected $fillable = [
         'tgl_post',

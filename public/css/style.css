@@ -24,3 +24,8 @@
     max-height: 200px;
     overflow: hidden;
 }
+
+.required::after {
+    content: "*";
+    color: rgb(228, 19, 19);
+}

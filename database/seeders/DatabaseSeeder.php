@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kategori;
 use App\Models\User;
 use App\Models\UserData;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -25,21 +26,46 @@ class DatabaseSeeder extends Seeder
             'nama' => "Admin",
             "nomor_hp" => "08123456789",
             "alamat" => "Indonesia",
-            'saldo' => 0,
+            'saldo' => 20000,
             'user_id' => 1
         ]);
 
         User::create([
-            'email' => 'dermawane988@gmail.com',
+            'email' => 'user1@gmail.com',
             'password' => Hash::make('12345'),
             'role' => 'jamaah'
         ]);
         UserData::create([
-            'nama' => "Muhammad Ega Dermawan",
+            'nama' => "User 1",
             "nomor_hp" => "08123456789",
             "alamat" => "Indonesia",
             'saldo' => 500000,
             'user_id' => 2
+        ]);
+        User::create([
+            'email' => 'user2@gmail.com',
+            'password' => Hash::make('12345'),
+            'role' => 'jamaah'
+        ]);
+        UserData::create([
+            'nama' => "User 2",
+            "nomor_hp" => "08123456789",
+            "alamat" => "Indonesia",
+            'saldo' => 500000,
+            'user_id' => 3
+        ]);
+
+        Kategori::create([
+            'nama_kategori' => 'Donasi',
+        ]);
+        Kategori::create([
+            'nama_kategori' => 'Zakat',
+        ]);
+        Kategori::create([
+            'nama_kategori' => 'Iuran Masjid',
+        ]);
+        Kategori::create([
+            'nama_kategori' => 'Infaq Jumat',
         ]);
 
         // User::factory(10)->create();

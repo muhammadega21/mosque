@@ -16,6 +16,7 @@ class UserData extends Model
         'saldo',
         'user_id',
     ];
+    protected $with = ['user'];
 
     public function user()
     {

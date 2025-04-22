@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
+            $table->date('tanggal')->default(now());
             $table->string('jenis_transaksi');
             $table->integer('jumlah');
             $table->string('keterangan');
             $table->enum('status_transaksi', ['selesai', 'pending', 'batal'])->default('pending');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('laporan_id');
+            $table->unsignedBigInteger('kategori_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('laporan_id')->references('id')->on('laporan_keuangan');
+            $table->foreign('kategori_id')->references('id')->on('kategori');
             $table->timestamps();
         });
     }
