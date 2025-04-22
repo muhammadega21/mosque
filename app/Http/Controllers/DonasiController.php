@@ -17,7 +17,7 @@ class DonasiController extends Controller
             'title' => "Donasi",
             'main_page' => '',
             'page' => 'Donasi',
-            'donasi' => Transaksi::where('user_id', Auth::user()->id)->get(),
+            'donasi' => Transaksi::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->paginate(10),
         ]);
     }
 

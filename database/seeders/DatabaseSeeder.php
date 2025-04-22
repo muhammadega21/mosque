@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Kategori;
+use App\Models\Transaksi;
 use App\Models\User;
 use App\Models\UserData;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -68,6 +69,6 @@ class DatabaseSeeder extends Seeder
             'nama_kategori' => 'Infaq Jumat',
         ]);
 
-        // User::factory(10)->create();
+        Transaksi::factory(50)->create();
     }
 }

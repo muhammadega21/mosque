@@ -18,7 +18,7 @@ class TransaksiController extends Controller
             'title' => "Keuangan",
             'main_page' => '',
             'page' => 'Keuangan',
-            'keuangan' => Transaksi::latest()->get(),
+            'keuangan' => Transaksi::orderBy('created_at', 'desc')->paginate(15),
             'kategori' => Kategori::all(),
         ]);
     }

@@ -48,7 +48,7 @@
                                 @else
                                     @foreach ($donasi as $item)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $loop->iteration + $donasi->firstItem() - 1 }}</td>
                                             <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
                                             <td>{{ $item->keterangan }}</td>
                                             <td>{{ $item->status_transaksi }}</td>
@@ -72,6 +72,8 @@
             </div>
         </div>
     </div>
+
+    {{ $donasi->links() }}
 
     {{-- Modal Donasi Online --}}
     <x-modal modalTitle="Donasi Online" modalID="addDonasi" btn="Donasi" action="{{ url('donasi') }}" method="POST"
@@ -193,4 +195,6 @@
             }
         </script>
     @endif
+
+
 </x-layouts.main>

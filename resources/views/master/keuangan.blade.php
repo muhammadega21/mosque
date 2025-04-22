@@ -38,7 +38,7 @@
                                 @else
                                     @foreach ($keuangan as $item)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $loop->iteration + $keuangan->firstItem() - 1 }}</td>
                                             <td>{{ $item->jenis_transaksi }}</td>
                                             <td>{{ $item->kategori->nama_kategori }}</td>
                                             <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
@@ -123,6 +123,8 @@
             </div>
         </div>
     </div>
+
+    {{ $keuangan->links() }}
 
     {{-- Modal Tambah Keuangan --}}
     <x-modal modalTitle="Tambah Keuangan" modalID="addKeuangan" btn="Tambah" action="{{ url('keuangan') }}"
@@ -250,4 +252,6 @@
             }
         </script>
     @endif
+
+
 </x-layouts.main>

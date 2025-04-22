@@ -3,6 +3,7 @@
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanKeuanganController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,12 @@ Route::middleware('auth')->group(function () {
         Route::post('keuangan', 'store');
         Route::put('keuangan/update/{id}', 'update');
         Route::get('keuangan/delete/{id}',  'destroy');
+    });
+    Route::controller(LaporanKeuanganController::class)->group(function () {
+        Route::get('laporan_keuangan', 'index');
+        Route::post('laporan_keuangan', 'store');
+        Route::get('laporan_keuangan/{id}', 'cetak')->name('LaporanKeuangan.cetak');
+        Route::get('laporan_keuangan/delete/{id}',  'destroy');
     });
     Route::controller(DonasiController::class)->group(function () {
         Route::get('donasi', 'index');
