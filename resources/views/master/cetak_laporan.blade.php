@@ -64,7 +64,7 @@
             background-color: #007bff;
         }
 
-        .no-print a.close {
+        .no-print a.back {
             background-color: #dc3545;
             text-decoration: none
         }
@@ -77,7 +77,7 @@
     </style>
 </head>
 
-<body>
+<body onload="window.print()">
 
     <h2>Laporan Keuangan</h2>
 
@@ -121,12 +121,12 @@
 
     <div class="footer">
         <p>Dicetak oleh: {{ auth()->user()->user_data->nama }}</p>
-        <p>Tanggal Cetak: {{ now()->translatedFormat('d F Y, H:i') }}</p>
+        <p>Tanggal Cetak: {{ now()->locale('id_ID')->translatedFormat('d F Y') }}</p>
     </div>
 
     <div class="no-print" style="text-align:center; margin-top: 30px;">
         <button class="print" onclick="window.print()">Print</button>
-        <a href="{{ url('/laporan_keuangan') }}" class="close">Close</a>
+        <a href="{{ url('/laporan_keuangan') }}" class="back">Back</a>
     </div>
 
 </body>

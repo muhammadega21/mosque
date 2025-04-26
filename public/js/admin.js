@@ -71,4 +71,36 @@ $(document).ready(function () {
         $("#tanggal2").val(keuangan.tanggal);
         $("#status_transaksi2").val(keuangan.status_transaksi);
     });
+
+    $("#updateKegiatan").on("show.bs.modal", function (event) {
+        const button = $(event.relatedTarget);
+        const kegiatan = button.data("kegiatan");
+        const idKegiatan = kegiatan.id;
+
+        $("#updateKegiatan form").attr(
+            "action",
+            "kegiatan_masjid/update/" + idKegiatan
+        );
+
+        $("#judul2").val(kegiatan.judul);
+        $("#tgl_post2").val(kegiatan.tgl_post);
+        $("#deskripsi2").val(kegiatan.deskripsi);
+        $("#oldImage").val(kegiatan.gambar);
+    });
+
+    $("#updateInformasi").on("show.bs.modal", function (event) {
+        const button = $(event.relatedTarget);
+        const informasi = button.data("informasi");
+        const idInformasi = informasi.id;
+
+        $("#updateInformasi form").attr(
+            "action",
+            "informasi_masjid/update/" + idInformasi
+        );
+
+        $("#judul2").val(informasi.judul);
+        $("#tgl_post2").val(informasi.tgl_post);
+        $("#deskripsi2").val(informasi.deskripsi);
+        $("#oldImage").val(informasi.gambar);
+    });
 });

@@ -14,7 +14,7 @@
 
             <li class="nav-item dropdown pe-3">
 
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                <div class="nav-link nav-profile d-flex align-items-center pe-0">
                     <div class="profile-name me-3 text-end">
                         <span>Welcome, {{ Auth()->user()->user_data->nama }}</span>
                         <span class="role">{{ Str::upper(Auth()->user()->role) }}</span>
@@ -23,37 +23,9 @@
                         <img src="{{ asset('img/user.png') }}" alt="Profile" class="w-100 h-100 object-fit-cover ">
                     </div>
                     <i class="bx bx-arrow-down"></i>
-                </a><!-- End Profile Iamge Icon -->
+                </div><!-- End Profile Iamge Icon -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>{{ Auth()->user()->user_data->nama }}</h6>
-                        <span>{{ Str::upper(Auth()->user()->role) }}</span>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="{{ url('profile') }}">
-                            <i class="bi bi-person"></i>
-                            <span>My Profile</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="{{ url('/logout') }}"
-                            onclick="confirmLogout(event)">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
-                        </a>
-                    </li>
-
-                </ul><!-- End Profile Dropdown Items -->
 
             </li><!-- End Profile Nav -->
 

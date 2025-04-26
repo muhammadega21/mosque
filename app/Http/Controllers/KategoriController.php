@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,12 +70,20 @@ class KategoriController extends Controller
 
     public function destroy(int $id)
     {
-        $kategori = Kategori::find($id);
-        if ($kategori) {
+        try {
+            $kategori = Kategori::findOrFail($id);
             $kategori->delete();
-            return redirect('/kategori')->with('success', 'Berhasil Menghapus Kategori');
-        } else {
-            return redirect('/kategori')->with('error', 'Kategori tidak ditemukan');
+
+            return redirect()->back()->with('success', 'Kategori berhasil dihapus.');
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') {
+                if (str_contains($e->getMessage(), '1451')) {
+                    return redirect()->back()->with('error', 'Kategori tidak dapat dihapus karena sedang digunakan di data keuangan.');
+                }
+            }
+
+            // Untuk error lainnya
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus kategori.');
         }
     }
 }

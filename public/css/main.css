@@ -807,30 +807,30 @@ h6 {
     flex-grow: 0;
 }
 
-.dashboard .permit-card .card-icon {
-    color: #f14141;
-    background: #ffcccc;
+.dashboard .saldo-card .card-icon {
+    color: #4153f1;
+    background: #ccecff;
 }
 
-.dashboard .permit-card .card-desc {
-    color: #b90c0c;
+.dashboard .saldo-card .card-desc {
+    color: #0c96b9;
 }
 
-.dashboard .present-card .card-icon {
+.dashboard .donation-card .card-icon {
     color: #2eca6a;
     background: #e0f8e9;
 }
 
-.dashboard .present-card .card-desc {
+.dashboard .donation-card .card-desc {
     color: #0a7935;
 }
 
-.dashboard .late-card .card-icon {
+.dashboard .users-card .card-icon {
     color: #ff771d;
     background: #fde5c5;
 }
 
-.dashboard .late-card .card-desc {
+.dashboard .users-card .card-desc {
     color: #b44b05;
 }
 

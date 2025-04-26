@@ -31,31 +31,6 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1
         ]);
 
-        User::create([
-            'email' => 'user1@gmail.com',
-            'password' => Hash::make('12345'),
-            'role' => 'jamaah'
-        ]);
-        UserData::create([
-            'nama' => "User 1",
-            "nomor_hp" => "08123456789",
-            "alamat" => "Indonesia",
-            'saldo' => 500000,
-            'user_id' => 2
-        ]);
-        User::create([
-            'email' => 'user2@gmail.com',
-            'password' => Hash::make('12345'),
-            'role' => 'jamaah'
-        ]);
-        UserData::create([
-            'nama' => "User 2",
-            "nomor_hp" => "08123456789",
-            "alamat" => "Indonesia",
-            'saldo' => 500000,
-            'user_id' => 3
-        ]);
-
         Kategori::create([
             'nama_kategori' => 'Donasi',
         ]);
@@ -69,6 +44,7 @@ class DatabaseSeeder extends Seeder
             'nama_kategori' => 'Infaq Jumat',
         ]);
 
+        User::factory(20)->create();
         Transaksi::factory(50)->create();
     }
 }

@@ -29,3 +29,7 @@
     content: "*";
     color: rgb(228, 19, 19);
 }
+
+div.swal-text {
+    text-align: center;
+}

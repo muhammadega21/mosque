@@ -20,9 +20,13 @@ class TransaksiFactory extends Factory
     public function definition(): array
     {
         $jenis = $this->faker->randomElement(['masuk', 'keluar']);
-        $jumlah = $this->faker->numberBetween(10000, 1000000);
+        $jumlah = match ($jenis) {
+            'masuk' => $this->faker->numberBetween(1, 100) * 2000,
+            'keluar' => $this->faker->numberBetween(1, 100) * 1000,
+        };
+
         return [
-            'user_id' => $this->faker->numberBetween(1, 3),
+            'user_id' => $this->faker->numberBetween(1, 20),
             'jenis_transaksi' => $jenis,
             'jumlah' => $jumlah,
             'status_transaksi' => 'selesai',
