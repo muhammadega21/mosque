@@ -12,7 +12,6 @@ class InformasiMasjid extends Model
     protected $fillable = [
         'tgl_post',
         'judul',
-        'slug',
         'deskripsi',
         'gambar',
         'kategori',

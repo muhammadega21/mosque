@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->date('tgl_post');
             $table->string('judul');
-            $table->string('slug')->unique();
             $table->text('deskripsi');
             $table->enum('kategori', ['informasi', 'kegiatan']);
             $table->string('gambar');

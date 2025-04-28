@@ -11,10 +11,12 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+// Landing Page
+Route::get('/', [HomeController::class, 'landingPage'])->name('landingPage');
+
 // Auth
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/', 'index')->name('login')->middleware('guest');
-    Route::get('/login', 'index')->middleware('guest');
+    Route::get('/login', 'index')->name("login")->middleware('guest');
     Route::post('/login', 'login');
     Route::get('/signup', 'register')->middleware('guest');
     Route::post('/register', 'registerStore')->name('registerStore');

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class InformasiMasjidController extends Controller
 {
@@ -51,12 +50,10 @@ class InformasiMasjidController extends Controller
             $image = $request->file('gambar')->store('informasi_masjid');
         }
 
-        $slug = Str::slug($request->input('judul'));
 
         InformasiMasjid::create([
             'tgl_post' => $request->input('tgl_post'),
             'judul' => $request->input('judul'),
-            'slug' => $slug,
             'deskripsi' => $request->input('deskripsi'),
             'kategori' => 'informasi',
             'gambar' => $image,
@@ -96,12 +93,10 @@ class InformasiMasjidController extends Controller
             $image = $request->file('gambar')->store('informasi_masjid');
         }
 
-        $slug = Str::slug($request->input('judul'));
 
         $informasi->update([
             'tgl_post' => $request->input('tgl_post'),
             'judul' => $request->input('judul'),
-            'slug' => $slug,
             'deskripsi' => $request->input('deskripsi'),
             'kategori' => 'informasi',
             'gambar' => $image,

@@ -60,4 +60,15 @@ class HomeController extends Controller
             'riwayat_donasi' => $riwayat_donasi,
         ]);
     }
+
+    public function landingPage()
+    {
+        $total_donasi = Transaksi::where('jenis_transaksi', 'masuk')->sum('jumlah');
+        $total_user = User::all()->count();
+        return view('landing_page.index', [
+            'title' => "DokuMosque | Masjid Al-Hamujirin",
+            'total_donasi' => $total_donasi,
+            'donatur' => $total_user,
+        ]);
+    }
 }
