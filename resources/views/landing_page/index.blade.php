@@ -79,13 +79,61 @@
         </section>
         {{-- End Donation --}}
 
-        <hr class="border border-gray-300 w-[90%] rounded-full mx-auto my-10">
+        <hr class="border border-gray-300 w-[80%] rounded-full mx-auto my-10">
 
         {{-- Kegiatan Masjid --}}
         <section class="kegiatan_masjid h-full my-16 px-[9%] grid justify-center ">
-            <h1 class="text-4xl font-bold text-gray-800">Kegiatan Masjid</h1>
+            <h1 class="text-4xl font-bold text-gray-800 text-center">Kegiatan Masjid</h1>
+            <div class="grid grid-cols-3 mt-10 gap-y-10 gap-x-5 items-start">
+                @foreach ($kegiatan_masjid as $data)
+                    <div
+                        class="kegiatan-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
+                        <div class="kegiatan-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
+                            <img src="{{ asset('/storage/kegiatan_masjid/' . $data->gambar) }}" alt="Kegiatan Masjid"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="kegiatan-card-content text-center mt-5 px-4 pb-10 relative">
+                            <div class="mb-8">
+                                <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
+                                <p class="text-base text-gray-600 mt-2 text-center">{{ $data->deskripsi }}</p>
+                            </div>
+                            <button type="button"
+                                class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </section>
         {{-- End Kegiatan Masjid --}}
+
+        <hr class="border border-gray-300 w-[80%] rounded-full mx-auto my-10">
+
+        {{-- Informasi Masjid --}}
+        <section class="informasi_masjid h-full my-16 px-[9%] grid justify-center ">
+            <h1 class="text-4xl font-bold text-gray-800 text-center">Informasi Masjid</h1>
+            <div class="grid grid-cols-3 mt-10 gap-y-10 gap-x-5 items-start">
+                @foreach ($informasi_masjid as $data)
+                    <div
+                        class="informasi-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
+                        <div class="informasi-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
+                            <img src="{{ asset('/storage/informasi_masjid/' . $data->gambar) }}" alt="Informasi Masjid"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="informasi-card-content text-center mt-5 px-4 pb-10 relative">
+                            <div class="mb-8">
+                                <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
+                                <p class="text-base text-gray-600 mt-2 text-justify">{{ $data->deskripsi }}</p>
+                            </div>
+                            <button type="button"
+                                class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+        {{-- End Informasi Masjid --}}
 
 
         @include('landing_page.footer')

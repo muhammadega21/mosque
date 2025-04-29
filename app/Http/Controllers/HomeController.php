@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InformasiMasjid;
 use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -65,10 +66,15 @@ class HomeController extends Controller
     {
         $total_donasi = Transaksi::where('jenis_transaksi', 'masuk')->sum('jumlah');
         $total_user = User::all()->count();
+        $kegiatan_masjid = InformasiMasjid::latest()->where('kategori', 'kegiatan')->take(6);
+        $informasi_masjid = InformasiMasjid::latest()->where('kategori', 'informasi')->take(6);
+
         return view('landing_page.index', [
             'title' => "DokuMosque | Masjid Al-Hamujirin",
             'total_donasi' => $total_donasi,
             'donatur' => $total_user,
+            'kegiatan_masjid' => $kegiatan_masjid->get(),
+            'informasi_masjid' => $informasi_masjid->get(),
         ]);
     }
 }
