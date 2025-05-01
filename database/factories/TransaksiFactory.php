@@ -32,7 +32,7 @@ class TransaksiFactory extends Factory
             'status_transaksi' => 'selesai',
             'keterangan' => $this->faker->sentence(),
             'tanggal' => $this->faker->dateTimeBetween('-6 months', 'now'),
-            'kategori_id' => $this->faker->numberBetween(1, 3),
+            'kategori_id' => 1,
         ];
     }
 }

@@ -176,7 +176,11 @@
                             <i class='bi bi-circle-fill activity-badge align-self-start'
                                 style="color: {{ ['#33FF57', '#f02233', '#FFC107', '#4682B4', '#6B5E5E', '#9A8665'][$loop->index % 6] }}"></i>
                             <div class="activity-content d-flex flex-column">
-                                <span>Dari <strong>{{ $item->user->user_data->nama }}</strong></span>
+                                @if ($item->user->role == 'pengurus')
+                                    <span>Dari <strong>{{ $item->user->user_data->nama }}</strong></span>
+                                @else
+                                    <span>Memberi Donasi sebesar</span>
+                                @endif
                                 <span class="text-muted small">Rp
                                     {{ number_format($item->jumlah, 0, ',', '.') }}</span>
 

@@ -91,6 +91,8 @@
         </div>
     </div>
 
+    {{ $jamaah->links() }}
+
     {{-- Modal Tambah Jamaah --}}
     <x-modal modalTitle="Tambah Jamaah" modalID="addJamaah" btn="Tambah" action="{{ url('jamaah') }}" method="POST"
         method2="POST" enctype="">

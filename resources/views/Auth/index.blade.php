@@ -48,7 +48,7 @@
 
                             <div class="d-flex justify-content-center py-4">
                                 <div class="logo d-flex align-items-center w-auto">
-                                    <img src="{{ asset('img/logo2.png') }}">
+                                    {{-- <img src="{{ asset('img/logo2.png') }}"> --}}
                                     <span class="d-none d-lg-block text-success">DokuMosque</span>
                                 </div>
                             </div><!-- End Logo -->

@@ -17,7 +17,7 @@ class UserController extends Controller
             'title' => "Jamaah",
             'main_page' => '',
             'page' => 'Jamaah',
-            'jamaah' => User::where('role', 'jamaah')->get(),
+            'jamaah' => User::where('role', 'jamaah')->orderBy('created_at', 'desc')->paginate(15),
         ]);
     }
 
