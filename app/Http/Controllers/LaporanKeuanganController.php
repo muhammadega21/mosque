@@ -56,7 +56,9 @@ class LaporanKeuanganController extends Controller
             $end = $tanggal->copy()->endOfMonth();
         }
 
-        $total = Transaksi::whereBetween('tanggal', [$start, $end])->sum('jumlah');
+        $total = Transaksi::whereBetween('tanggal', [$start, $end])
+            ->where('kategori_id', '!=', 2)
+            ->sum('jumlah');
 
         if ($total === 0) {
             return redirect()->back()->with('error', 'Tidak ada transaksi untuk periode ini');
@@ -64,11 +66,13 @@ class LaporanKeuanganController extends Controller
 
         // Simpan ke DB jika belum ada
         $laporan = LaporanKeuangan::firstOrCreate([
-            'tanggal' => $start,
+            'tanggal' => $tanggal->format('Y-m-d'),
             'laporan_periodik' => $periode,
         ], [
             'total_uang' => $total,
             'user_id' => Auth::user()->id,
+            'periode_start' => $start,
+            'periode_end' => $end,
         ]);
 
         return redirect()->route('LaporanKeuangan.cetak', $laporan->id);
@@ -77,20 +81,33 @@ class LaporanKeuanganController extends Controller
     public function cetak($id)
     {
         $laporan = LaporanKeuangan::findOrFail($id);
-        $tanggal = Carbon::parse($laporan->tanggal);
 
-        if ($laporan->laporan_periodik === 'hari') {
-            $transaksi = Transaksi::whereDate('tanggal', $tanggal)->get();
-        } elseif ($laporan->laporan_periodik === 'minggu') {
-            $startOfWeek = $tanggal->copy()->startOfWeek(Carbon::MONDAY);
-            $endOfWeek = $tanggal->copy()->endOfWeek(Carbon::SUNDAY);
-            $transaksi = Transaksi::whereBetween('tanggal', [$startOfWeek, $endOfWeek])->get();
-        } elseif ($laporan->laporan_periodik === 'bulan') {
-            $transaksi = Transaksi::whereYear('tanggal', $tanggal->year)
-                ->whereMonth('tanggal', $tanggal->month)
-                ->get();
+        // Gunakan periode_start dan periode_end yang sudah disimpan
+        if ($laporan->periode_start && $laporan->periode_end) {
+            $transaksi = Transaksi::whereBetween('tanggal', [
+                $laporan->periode_start,
+                $laporan->periode_end
+            ])->where('kategori_id', '!=', 2)->get();
         } else {
-            $transaksi = collect(); // fallback kosong jika tipe tidak dikenali
+            // Fallback untuk data lama
+            $tanggal = Carbon::parse($laporan->tanggal);
+
+            if ($laporan->laporan_periodik === 'hari') {
+                $transaksi = Transaksi::whereDate('tanggal', $tanggal)
+                    ->where('kategori_id', '!=', 2)->get();
+            } elseif ($laporan->laporan_periodik === 'minggu') {
+                $startOfWeek = $tanggal->copy()->startOfWeek(Carbon::MONDAY);
+                $endOfWeek = $tanggal->copy()->endOfWeek(Carbon::SUNDAY);
+                $transaksi = Transaksi::whereBetween('tanggal', [$startOfWeek, $endOfWeek])
+                    ->where('kategori_id', '!=', 2)->get();
+            } elseif ($laporan->laporan_periodik === 'bulan') {
+                $transaksi = Transaksi::whereYear('tanggal', $tanggal->year)
+                    ->whereMonth('tanggal', $tanggal->month)
+                    ->where('kategori_id', '!=', 2)
+                    ->get();
+            } else {
+                $transaksi = collect();
+            }
         }
 
         return view('master.cetak_laporan', [

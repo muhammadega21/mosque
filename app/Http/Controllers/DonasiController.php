@@ -6,6 +6,7 @@ use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DonasiController extends Controller
@@ -83,18 +84,37 @@ class DonasiController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'saldo' => 'required|numeric',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'saldo.required' => 'Jumlah saldo tidak boleh kosong',
             'saldo.numeric' => 'Jumlah saldo harus berupa angka',
+            'gambar.required' => 'Bukti pembayaran tidak boleh kosong',
+            'gambar.image' => 'Bukti pembayaran harus berupa gambar',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with('addSaldo', 'Gagal Menambahkan Saldo, Silahkan Isi Form Dengan Benar');
         }
 
-        User::find(Auth::user()->id)->user_data->update([
-            'saldo' => User::find(Auth::user()->id)->user_data->saldo + $request->input('saldo'),
+
+        if ($request->file('gambar')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $image = $request->file('gambar')->store('bukti_pembayaran');
+        }
+
+        Transaksi::create([
+            'user_id' => Auth::user()->id,
+            'jenis_transaksi' => 'masuk',
+            'kategori_id' => 2,
+            'jumlah' => $request->input('saldo'),
+            'keterangan' => 'Top Up Saldo',
+            'gambar' => $image,
+            'status_transaksi' => 'pending',
         ]);
-        return redirect()->back()->with('success', 'Berhasil Menambahkan Saldo');
+        return redirect()->back()->with('success', 'Berhasil Menambahkan Saldo, Silahkan Menunggu Konfirmasi Admin');
     }
 }

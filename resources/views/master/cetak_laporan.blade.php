@@ -96,7 +96,9 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Tanggal Transaksi</th>
+                <th>Tanggal</th>
+                <th>Jenis Transaksi</th>
+                <th>Kategori</th>
                 <th>Keterangan</th>
                 <th>Nominal</th>
             </tr>
@@ -106,14 +108,22 @@
             @foreach ($transaksi as $i => $trx)
                 <tr>
                     <td>{{ $i + 1 }}</td>
-                    <td>{{ \Carbon\Carbon::parse($trx->created_at)->translatedFormat('d-m-Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($trx->tanggal)->translatedFormat('d-m-Y') }}</td>
+                    <td>{{ $trx->jenis_transaksi }}</td>
+                    <td>{{ $trx->kategori->nama_kategori }}</td>
                     <td>{{ $trx->keterangan }}</td>
-                    <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
+                    @if ($trx->jenis_transaksi == 'keluar')
+                        <td>Rp -{{ number_format($trx->jumlah, 0, ',', '.') }}</td>
+                    @else
+                        <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
+                    @endif
                 </tr>
-                @php $total += $trx->jumlah; @endphp
+                @php
+                    $total += $trx->jenis_transaksi == 'keluar' ? -$trx->jumlah : $trx->jumlah;
+                @endphp
             @endforeach
             <tr class="total">
-                <td colspan="3">Total</td>
+                <td colspan="5">Total</td>
                 <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
             </tr>
         </tbody>

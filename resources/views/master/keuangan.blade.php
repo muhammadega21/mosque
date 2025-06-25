@@ -46,20 +46,43 @@
                                             <td>{{ $item->status_transaksi }}</td>
                                             <td>{{ $item->tanggal }}</td>
                                             <td>{{ $item->user->user_data->nama }}</td>
-                                            <td>
-                                                <div class="d-flex gap-1">
-                                                    <button type="button" class="badge bg-light border-warning border"
-                                                        data-bs-toggle="modal" data-bs-target="#updateKeuangan"
-                                                        data-keuangan="{{ $item }}"
-                                                        data-kategori="{{ $kategori }}">
-                                                        <span class="fw-semibold"><i
-                                                                class="bx bxs-edit text-warning"></i></span>
-                                                    </button>
-                                                    <a href="{{ url('keuangan/delete/' . $item->id) }}"
-                                                        class="badge border-danger border" onclick="confirm(event)"><i
-                                                            class='bx bxs-trash text-danger'></i></a>
-                                                </div>
-                                            </td>
+                                            @if ($item->kategori_id == 2)
+                                                <td>
+                                                    <div class="d-flex gap-1">
+                                                        <button type="button"
+                                                            class="badge bg-light border-primary border"
+                                                            data-bs-toggle="modal" data-bs-target="#cekBukti"
+                                                            data-bukti="{{ $item }}">
+                                                            <span class="fw-semibold"><i
+                                                                    class="bx bxs-show text-primary"></i></span>
+                                                        </button>
+                                                        @if ($item->status_transaksi != 'pending')
+                                                            <a href="{{ url('keuangan/delete/' . $item->id) }}"
+                                                                class="badge border-danger border"
+                                                                onclick="confirm(event)"><i
+                                                                    class='bx bxs-trash text-danger'></i></a>
+                                                        @endif
+
+                                                    </div>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <div class="d-flex gap-1">
+                                                        <button type="button"
+                                                            class="badge bg-light border-warning border"
+                                                            data-bs-toggle="modal" data-bs-target="#updateKeuangan"
+                                                            data-keuangan="{{ $item }}"
+                                                            data-kategori="{{ $kategori }}">
+                                                            <span class="fw-semibold"><i
+                                                                    class="bx bxs-edit text-warning"></i></span>
+                                                        </button>
+                                                        <a href="{{ url('keuangan/delete/' . $item->id) }}"
+                                                            class="badge border-danger border"
+                                                            onclick="confirm(event)"><i
+                                                                class='bx bxs-trash text-danger'></i></a>
+                                                    </div>
+                                                </td>
+                                            @endif
                                         </tr>
 
                                         {{-- Modal Update Keuangan --}}
@@ -125,6 +148,60 @@
     </div>
 
     {{ $keuangan->links() }}
+
+    {{-- Modal Cek Bukti Pembayaran --}}
+    <div class="modal fade" id="cekBukti" tabindex="-1" aria-labelledby="cekBuktiLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cekBuktiLabel">Cek Bukti Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-12 text-center">
+                            <img id="buktiPembayaranImg" src="" alt="Bukti Pembayaran"
+                                class="img-fluid rounded" style="max-height: 500px;">
+                        </div>
+                        <div class="col-sm-12 mt-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="mb-1"><strong>Jenis Transaksi:</strong> <span
+                                            id="jenisTransaksiText"></span></p>
+                                    <p class="mb-1"><strong>Jumlah:</strong> Rp <span
+                                            id="jumlahTransaksiText"></span></p>
+                                </div>
+                                <div>
+                                    <p class="mb-1"><strong>Tanggal:</strong> <span
+                                            id="tanggalTransaksiText"></span></p>
+                                    <p class="mb-1"><strong>Status:</strong> <span id="statusTransaksiText"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="mb-1 mt-2"><strong>Keterangan:</strong> <span
+                                    id="keteranganTransaksiText"></span></p>
+                        </div>
+                    </div>
+                    <form id="approvalForm" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="transaksi_id" id="transaksiId">
+                        <input type="hidden" name="user_id" id="userId">
+                        <input type="hidden" name="jumlah" id="jumlah">
+                        <input type="hidden" name="action" id="action" value="">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div id="actionButtons" class="me-auto">
+                        <button type="button" class="btn btn-success" onclick="approvePayment()">Terima</button>
+                        <button type="button" class="btn btn-danger" onclick="rejectPayment()">Tolak</button>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal Cek Bukti Pembayaran --}}
 
     {{-- Modal Tambah Keuangan --}}
     <x-modal modalTitle="Tambah Keuangan" modalID="addKeuangan" btn="Tambah" action="{{ url('keuangan') }}"

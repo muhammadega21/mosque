@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
         Route::post('keuangan', 'store');
         Route::put('keuangan/update/{id}', 'update');
         Route::get('keuangan/delete/{id}',  'destroy');
+        Route::put('keuangan/approve', 'approve')->name('transaksi.approve');
+        Route::put('keuangan/reject',  'reject')->name('transaksi.reject');
     });
     Route::controller(LaporanKeuanganController::class)->group(function () {
         Route::get('laporan_keuangan', 'index');

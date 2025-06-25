@@ -55,11 +55,20 @@
                                             <td>{{ $item->tanggal }}</td>
                                             <td>
                                                 <div class="d-flex gap-1">
-                                                    <a href="{{ url('donasi/cetak/' . encrypt($item->id)) }}"
-                                                        target="_blank" class="badge bg-light border-danger border">
-                                                        <span class="fw-bold text-danger"><i
-                                                                class="bx bxs-file-pdf"></i>Cetak</span>
-                                                    </a>
+                                                    @if ($item->kategori_id == 2)
+                                                        <button type="button"
+                                                            class="badge bg-light border-primary border"
+                                                            data-bs-toggle="modal" data-bs-target="#cekBukti"
+                                                            data-image="{{ asset('/storage/' . $item->gambar) }}"><i
+                                                                class="bx bxs-show text-primary"></i></button>
+                                                    @else
+                                                        <a href="{{ url('donasi/cetak/' . encrypt($item->id)) }}"
+                                                            target="_blank" class="badge bg-light border-danger border">
+                                                            <span class="fw-bold text-danger"><i
+                                                                    class="bx bxs-file-pdf"></i>Cetak</span>
+                                                        </a>
+                                                    @endif
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -74,6 +83,38 @@
     </div>
 
     {{ $donasi->links() }}
+
+    {{-- Modal Cek Bukti Pembayaran --}}
+    <div class="modal fade" id="cekBukti" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cek Bukti Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="">
+                    <div class="modal-body">
+                        <img id="buktiPembayaranImage" alt="bukti pembayaran" class="img-fluid">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#cekBukti').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var imageUrl = button.data('image'); // Extract info from data-* attributes
+                var modal = $(this);
+                modal.find('#buktiPembayaranImage').attr('src', imageUrl);
+
+            });
+        });
+    </script>
+    {{-- Modal Cek Bukti Pembayaran --}}
 
     {{-- Modal Donasi Online --}}
     <x-modal modalTitle="Donasi Online" modalID="addDonasi" btn="Donasi" action="{{ url('donasi') }}" method="POST"
@@ -99,7 +140,7 @@
 
     {{-- Modal Isi Saldo --}}
     <x-modal modalTitle="Isi Saldo" modalID="addSaldo" btn="Tambah" action="{{ url('donasi/saldo') }}" method="POST"
-        method2="POST" enctype="">
+        method2="POST" enctype="multipart/form-data">
         <div class="row mb-3">
             <span><strong>Saldo saat ini </strong> : Rp
                 {{ number_format(Auth::user()->user_data->saldo, 2, ',', '.') }}</span>
@@ -117,16 +158,47 @@
             </div>
             <div class="mt-3">
                 <div class="input-box col-sm-12">
-                    <label for="metode_pembayaran" class="mb-2">Metode Pembayaran</label>
-                    <select class="form-select" name="metode_pembayaran" id="metode_pembayaran">
+                    <label for="metode_pembayaran" class="mb-2 required">Metode Pembayaran</label>
+                    <select class="form-select @error('metode_pembayaran') is-invalid @enderror"
+                        name="metode_pembayaran" id="metode_pembayaran">
                         <option value="" selected disabled>Pilih Metode Pembayaran</option>
-                        <option value="bank">Bank</option>
-                        <option value="gopay">Gopay</option>
-                        <option value="ovo">Ovo</option>
-                        <option value="dana">Dana</option>
+                        <option value="bank" {{ old('metode_pembayaran') == 'bank' ? 'selected' : '' }}>Bank
+                        </option>
+                        <option value="gopay" {{ old('metode_pembayaran') == 'gopay' ? 'selected' : '' }}>Gopay
+                        </option>
+                        <option value="ovo" {{ old('metode_pembayaran') == 'ovo' ? 'selected' : '' }}>Ovo</option>
+                        <option value="dana" {{ old('metode_pembayaran') == 'dana' ? 'selected' : '' }}>Dana
+                        </option>
                     </select>
+                    @error('metode_pembayaran')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <!-- Info Rekening -->
+                <div id="info-rekening" class="mt-2 p-3 bg-light rounded" style="display: none;">
+                    <strong>Nomor Rekening/Tujuan:</strong>
+                    <div id="detail-rekening"></div>
+                </div>
+
+                <!-- Input Upload Bukti Pembayaran -->
+                <div id="upload-container" class="mt-3" style="display: none;">
+                    <div class="input-box col-sm-12">
+                        <label for="bukti_pembayaran" class="mb-2 required">Upload Bukti Pembayaran</label>
+                        <input type="file" class="form-control @error('bukti_pembayaran') is-invalid @enderror"
+                            id="bukti_pembayaran" name="gambar" accept="image/*,.pdf">
+                        <small class="text-muted">Format: JPG, PNG, JPEG (Maks: 2MB)</small>
+                        @error('bukti_pembayaran')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </div>
             </div>
+        </div>
     </x-modal>
     {{-- Modal Isi Saldo --}}
 
@@ -195,6 +267,42 @@
             }
         </script>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const metodePembayaran = document.getElementById('metode_pembayaran');
+            const infoRekening = document.getElementById('info-rekening');
+            const detailRekening = document.getElementById('detail-rekening');
+            const uploadContainer = document.getElementById('upload-container');
+
+            // Data nomor rekening 
+            const dataRekening = {
+                'bank': 'Bank ABC - 1234567890 a.n DokuMosque',
+                'gopay': '081234567890 a.n DokuMosque',
+                'ovo': '081234567890 a.n DokuMosque',
+                'dana': '081234567890 a.n DokuMosque'
+            };
+
+            metodePembayaran.addEventListener('change', function() {
+                const selectedMethod = this.value;
+
+                if (selectedMethod && selectedMethod !== '') {
+                    infoRekening.style.display = 'block';
+                    uploadContainer.style.display = 'block';
+                    detailRekening.innerHTML = dataRekening[selectedMethod];
+                } else {
+                    infoRekening.style.display = 'none';
+                    uploadContainer.style.display = 'none';
+                    detailRekening.innerHTML = '';
+                }
+            });
+
+            @if (old('metode_pembayaran'))
+                metodePembayaran.value = "{{ old('metode_pembayaran') }}";
+                metodePembayaran.dispatchEvent(new Event('change'));
+            @endif
+        });
+    </script>
 
 
 </x-layouts.main>

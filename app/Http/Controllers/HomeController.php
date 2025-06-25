@@ -17,7 +17,7 @@ class HomeController extends Controller
         if (Auth::user()->role == 'pengurus') {
             $riwayat_donasi = Transaksi::where('jenis_transaksi', 'masuk')->orderBy('created_at', 'desc')->take(6)->get();
         } else {
-            $riwayat_donasi = Transaksi::where('user_id', Auth::user()->id)->where('jenis_transaksi', 'masuk')->orderBy('created_at', 'desc')->take(6)->get();
+            $riwayat_donasi = Transaksi::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->take(6)->get();
         }
 
         $tahun = date('Y');

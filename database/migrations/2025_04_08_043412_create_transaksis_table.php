@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('jumlah');
             $table->string('keterangan');
             $table->enum('status_transaksi', ['selesai', 'pending', 'batal'])->default('pending');
+            $table->string('gambar')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

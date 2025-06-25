@@ -16,7 +16,8 @@ class Transaksi extends Model
         'keterangan',
         'status_transaksi',
         'user_id',
-        'kategori_id'
+        'kategori_id',
+        'gambar'
     ];
     protected $with = ['user', 'laporan', 'kategori'];
     public function user()

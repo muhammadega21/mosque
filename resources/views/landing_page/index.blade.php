@@ -89,10 +89,10 @@
                     <div
                         class="kegiatan-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
                         <div class="kegiatan-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
-                            <img src="{{ asset('/storage/kegiatan_masjid/' . $data->gambar) }}" alt="Kegiatan Masjid"
+                            <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Kegiatan Masjid"
                                 class="w-full h-full object-cover">
                         </div>
-                        <div class="kegiatan-card-content text-center mt-5 px-4 pb-10 relative">
+                        <div class="kegiatan-card-content text-center mt-5 px-4 pb-10 relative w-full">
                             <div class="mb-8">
                                 <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
                                 <p class="text-base text-gray-600 mt-2 text-center">{{ $data->deskripsi }}</p>
@@ -117,10 +117,10 @@
                     <div
                         class="informasi-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
                         <div class="informasi-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
-                            <img src="{{ asset('/storage/informasi_masjid/' . $data->gambar) }}" alt="Informasi Masjid"
+                            <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Informasi Masjid"
                                 class="w-full h-full object-cover">
                         </div>
-                        <div class="informasi-card-content text-center mt-5 px-4 pb-10 relative">
+                        <div class="informasi-card-content text-center mt-5 px-4 pb-10 relative w-full">
                             <div class="mb-8">
                                 <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
                                 <p class="text-base text-gray-600 mt-2 text-justify">{{ $data->deskripsi }}</p>
