@@ -58,7 +58,7 @@
                                                     @if ($item->kategori_id == 2)
                                                         <button type="button"
                                                             class="badge bg-light border-primary border"
-                                                            data-bs-toggle="modal" data-bs-target="#cekBukti"
+                                                            data-bs-toggle="modal" data-bs-target="#cekBuktiBayar"
                                                             data-image="{{ asset('/storage/' . $item->gambar) }}"><i
                                                                 class="bx bxs-show text-primary"></i></button>
                                                     @else
@@ -85,7 +85,7 @@
     {{ $donasi->links() }}
 
     {{-- Modal Cek Bukti Pembayaran --}}
-    <div class="modal fade" id="cekBukti" tabindex="-1">
+    <div class="modal fade" id="cekBuktiBayar" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -105,7 +105,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            $('#cekBukti').on('show.bs.modal', function(event) {
+            $('#cekBuktiBayar').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var imageUrl = button.data('image'); // Extract info from data-* attributes
                 var modal = $(this);
