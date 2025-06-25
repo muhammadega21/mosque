@@ -1,8 +1,47 @@
-- composer install
-- php artisan migrate --seed
-- php artisan storage:link
-- php artisan serve
-
+# Mosque Project Setup Guide
+1. Clone the repository:
+```bash
+git clone https://github.com/muhammadega21/mosque
+```
+2. Navigate to project directory:
+```bash
+cd mosque
+```
+3. Install dependencies:
+```bash
+composer install
+```
+4. Open in your preferred editor (VS Code example):
+```bash
+code .
+```
+5. Duplicate file ".env-example" and rename it to ".env"
+6. Generate application key:
+```bash
+php artisan key:generate
+```
+7. Configure database connection in .env:
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mosque
+DB_USERNAME=root
+DB_PASSWORD=
+```
+8. Run migrations with seeders:
+```bash
+php artisan migrate --seed
+```
+9. Create storage link:
+```bash
+php artisan storage:link
+```
+10. Start development server:
+```bash
+php artisan serve
+```
+  
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
