@@ -97,34 +97,47 @@
             <tr>
                 <th>No</th>
                 <th>Tanggal</th>
-                <th>Jenis Transaksi</th>
+                <th>Transaksi Masuk</th>
+                <th>Transaksi Keluar</th>
                 <th>Kategori</th>
                 <th>Keterangan</th>
-                <th>Nominal</th>
             </tr>
         </thead>
         <tbody>
-            @php $total = 0; @endphp
-            @foreach ($transaksi as $i => $trx)
+            @php
+                $total = 0;
+                $total_masuk = 0;
+                $total_keluar = 0;
+                $no = 1;
+            @endphp
+            @foreach ($transaksi->sortBy('tanggal') as $i => $trx)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ $no++ }}</td>
                     <td>{{ \Carbon\Carbon::parse($trx->tanggal)->translatedFormat('d-m-Y') }}</td>
-                    <td>{{ $trx->jenis_transaksi }}</td>
-                    <td>{{ $trx->kategori->nama_kategori }}</td>
-                    <td>{{ $trx->keterangan }}</td>
                     @if ($trx->jenis_transaksi == 'keluar')
-                        <td>Rp -{{ number_format($trx->jumlah, 0, ',', '.') }}</td>
+                        <td></td>
+                        <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
+                        @php
+                            $total -= $trx->jumlah;
+                            $total_keluar += $trx->jumlah;
+                        @endphp
                     @else
                         <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
+                        <td></td>
+                        @php
+                            $total += $trx->jumlah;
+                            $total_masuk += $trx->jumlah;
+                        @endphp
                     @endif
+                    <td>{{ $trx->kategori->nama_kategori }}</td>
+                    <td>{{ $trx->keterangan }}</td>
                 </tr>
-                @php
-                    $total += $trx->jenis_transaksi == 'keluar' ? -$trx->jumlah : $trx->jumlah;
-                @endphp
             @endforeach
             <tr class="total">
-                <td colspan="5">Total</td>
-                <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
+                <td colspan="2"></td>
+                <td colspan="1">Rp {{ number_format($total_masuk, 0, ',', '.') }}</td>
+                <td colspan="1">Rp {{ number_format($total_keluar, 0, ',', '.') }}</td>
+                <td colspan="2">Total: Rp {{ number_format($total, 0, ',', '.') }}</td>
             </tr>
         </tbody>
     </table>
@@ -136,7 +149,7 @@
 
     <div class="no-print" style="text-align:center; margin-top: 30px;">
         <button class="print" onclick="window.print()">Print</button>
-        <a href="{{ url('/laporan_keuangan') }}" class="back">Back</a>
+        <a href="{{ url()->previous() }}" class="back">Back</a>
     </div>
 
 </body>

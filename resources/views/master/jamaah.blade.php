@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mt-2">
-                        <h5 class="card-title">Data Jamaah</h5>
+                        <h5 class="card-title">Data Donatur</h5>
                         <div class="d-flex align-items-center gap-2">
                             <x-search placeholder="Search..." />
                             <div class="btn-action">
@@ -54,7 +54,7 @@
                                         </tr>
 
                                         {{-- Modal Update Jamaah --}}
-                                        <x-modal modalTitle="Update Jamaah" modalID="updateJamaah" btn="Update"
+                                        <x-modal modalTitle="Update Donatur" modalID="updateJamaah" btn="Update"
                                             action="" method="POST" method2="PUT" enctype="">
                                             <div class="row mb-3">
                                                 <div class="input-box col-sm-12">
@@ -94,7 +94,7 @@
     {{ $jamaah->links() }}
 
     {{-- Modal Tambah Jamaah --}}
-    <x-modal modalTitle="Tambah Jamaah" modalID="addJamaah" btn="Tambah" action="{{ url('jamaah') }}" method="POST"
+    <x-modal modalTitle="Tambah Donatur" modalID="addJamaah" btn="Tambah" action="{{ url('jamaah') }}" method="POST"
         method2="POST" enctype="">
         <div class="row mb-3">
             <div class="input-group justify-content-between">

@@ -23,7 +23,7 @@
 
                     <li>
                         <a href="{{ url('jamaah') }}" class="{{ Request::is('jamaah') ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>Data Jamaah</span>
+                            <i class="bi bi-circle"></i><span>Data Donatur</span>
                         </a>
                     </li>
                     <li>

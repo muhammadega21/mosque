@@ -14,9 +14,9 @@ class UserController extends Controller
     public function index()
     {
         return view('master.jamaah', [
-            'title' => "Jamaah",
+            'title' => "Donatur",
             'main_page' => '',
-            'page' => 'Jamaah',
+            'page' => 'Donatur',
             'jamaah' => User::where('role', 'jamaah')->orderBy('created_at', 'desc')->paginate(15),
         ]);
     }

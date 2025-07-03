@@ -17,7 +17,8 @@
                 <div class="nav-link nav-profile d-flex align-items-center pe-0">
                     <div class="profile-name me-3 text-end">
                         <span>Welcome, {{ Auth()->user()->user_data->nama }}</span>
-                        <span class="role">{{ Str::upper(Auth()->user()->role) }}</span>
+                        <span
+                            class="role">{{ Str::upper(Auth()->user()->role == 'pengurus' ? 'admin' : 'donatur') }}</span>
                     </div>
                     <div class="rounded-circle overflow-hidden " style="width: 35px; height: 35px;">
                         <img src="{{ asset('img/user.png') }}" alt="Profile" class="w-100 h-100 object-fit-cover ">

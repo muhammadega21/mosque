@@ -29,7 +29,7 @@
 </head>
 
 <body onload="window.print()">
-    <h2>Data Donasi</h2>
+    <h2>Data Laporan Donasi</h2>
     <p>Nama: {{ Auth::user()->user_data->nama }}</p>
     <table>
         <thead>
@@ -42,9 +42,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($donasi as $index => $item)
+            @php
+                $no = 1;
+            @endphp
+            @foreach ($donasi->sortBy('tanggal') as $index => $item)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $no++ }}</td>
                     <td>{{ date('d F Y', strtotime($item->tanggal)) }}</td>
                     <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
                     <td>{{ $item->keterangan }}</td>
