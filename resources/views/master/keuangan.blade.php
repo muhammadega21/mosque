@@ -180,14 +180,28 @@
                             </div>
                             <p class="mb-1 mt-2"><strong>Keterangan:</strong> <span
                                     id="keteranganTransaksiText"></span></p>
+
+
                         </div>
                     </div>
                     <form id="approvalForm" method="POST">
                         @csrf
                         @method('PUT')
+                        <div class="mt-3 ">
+                            <div class="p-3 border rounded ">
+                                <label for="jumlah" class="form-label"><strong>Konfirmasi Jumlah
+                                        Saldo Masuk</strong></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" class="form-control" id="jumlah" name="jumlah"
+                                        placeholder="Masukkan jumlah yang dikonfirmasi">
+                                </div>
+                                <small class="text-muted">Isi dengan jumlah yang sesuai dengan bukti
+                                    pembayaran</small>
+                            </div>
+                        </div>
                         <input type="hidden" name="transaksi_id" id="transaksiId">
                         <input type="hidden" name="user_id" id="userId">
-                        <input type="hidden" name="jumlah" id="jumlah">
                         <input type="hidden" name="action" id="action" value="">
                     </form>
                 </div>

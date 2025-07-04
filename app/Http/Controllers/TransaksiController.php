@@ -122,11 +122,12 @@ class TransaksiController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->with('error', 'Gagal menyetujui pembayaran');
+            return redirect()->back()->withErrors($validator)->with('error', $validator->errors()->first());
         }
 
 
         Transaksi::where('id', $request->transaksi_id)->update([
+            'jumlah' => $request->jumlah,
             'status_transaksi' => 'selesai',
         ]);
 

@@ -133,6 +133,7 @@ $(document).ready(function () {
         modal.find("#transaksiId").val(transaksi.id);
         modal.find("#userId").val(transaksi.user_id);
         modal.find("#jumlah").val(transaksi.jumlah);
+        modal.find("#originalAmount").val(transaksi.jumlah);
 
         // Tampilkan tombol action hanya untuk status pending
         if (transaksi.status_transaksi === "pending") {
