@@ -7,188 +7,137 @@
     <!-- Left side columns -->
     <div class="col-lg-8">
         <div class="row">
-
-            <!-- Saldo Card -->
-            <div class="col-xxl-4 col-md-6">
-                <div class="card info-card saldo-card">
-
+            <!-- Users Card -->
+            <div class="col-xxl-4 col-xl-6">
+                <div class="card info-card users-card">
                     <div class="card-body">
-                        <h5 class="card-title">Saldo <span>| Total</span></h5>
+                        <h5 class="card-title">Users <span>| Total</span></h5>
 
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-wallet"></i>
+                                <i class="bi bi-people"></i>
                             </div>
                             <div class="ps-3">
-                                <h6>Rp {{ number_format($saldo, 0, ',', '.') }}</h6>
+                                <h6>{{ $total_user }}</h6>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div><!-- End Saldo Card -->
+            </div><!-- End Users Card -->
 
-            <!-- Donation Card -->
+            <!-- Mosque Funds Card -->
             <div class="col-xxl-4 col-md-6">
                 <div class="card info-card donation-card">
                     <div class="card-body">
-                        <h5 class="card-title">Donasi <span>| Bulan Ini</span>
-                        </h5>
+                        <h5 class="card-title">Kas Masjid <span>| Total</span></h5>
 
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                 <i class="bi bi-currency-dollar"></i>
                             </div>
                             <div class="ps-3">
-                                <h6>Rp {{ number_format($donasi_user, 0, ',', '.') }}</h6>
+                                <h6>Rp {{ number_format($uang_masjid, 0, ',', '.') }}</h6>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div><!-- End Donation Card -->
+            </div><!-- End Mosque Funds Card -->
 
+            <!-- Reports -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Laporan <span>/Bulanan</span></h5>
 
-            @can('pengurus')
-                <!-- Users Card -->
-                <div class="col-xxl-4 col-xl-6">
+                        <!-- Line Chart -->
+                        <div id="reportsChart"></div>
 
-                    <div class="card info-card users-card">
-                        <div class="card-body">
-                            <h5 class="card-title">Users <span>| Total</span>
-                            </h5>
-
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>{{ $total_user }}</h6>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div><!-- End Users Card -->
-
-                <!-- Donation Card -->
-                <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card donation-card">
-                        <div class="card-body">
-                            <h5 class="card-title">Uang Masjid <span>| Total</span>
-                            </h5>
-
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-currency-dollar"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>Rp {{ number_format($uang_masjid, 0, ',', '.') }}</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div><!-- End Donation Card -->
-                <!-- Reports -->
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Laporan <span>/Bulanan</span></h5>
-
-                            <!-- Line Chart -->
-                            <div id="reportsChart"></div>
-
-                            <script>
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    new ApexCharts(document.querySelector("#reportsChart"), {
-                                        series: [{
-                                            name: 'Uang Masuk',
-                                            data: {{ $uang_masuk }},
-                                        }, {
-                                            name: 'Uang Keluar',
-                                            data: {{ $uang_keluar }}
-                                        }],
-                                        chart: {
-                                            height: 350,
-                                            type: 'line',
-                                            toolbar: {
-                                                show: false
-                                            },
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new ApexCharts(document.querySelector("#reportsChart"), {
+                                    series: [{
+                                        name: 'Kas Masuk',
+                                        data: {{ $uang_masuk }},
+                                    }, {
+                                        name: 'Kas Keluar',
+                                        data: {{ $uang_keluar }}
+                                    }],
+                                    chart: {
+                                        height: 350,
+                                        type: 'line',
+                                        toolbar: {
+                                            show: false
                                         },
-                                        markers: {
-                                            size: 5
+                                    },
+                                    markers: {
+                                        size: 5
+                                    },
+                                    colors: ['#33FF57', '#f02233'],
+                                    fill: {
+                                        type: "solid",
+                                    },
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    stroke: {
+                                        curve: 'straight',
+                                        width: 3
+                                    },
+                                    xaxis: {
+                                        categories: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
+                                            "September", "Oktober", "November", "Desember",
+                                        ]
+                                    },
+                                    tooltip: {
+                                        x: {
+                                            format: 'MM/yyyy'
                                         },
-                                        colors: ['#33FF57', '#f02233'],
-                                        fill: {
-                                            type: "solid",
-                                        },
-                                        dataLabels: {
-                                            enabled: false
-                                        },
-                                        stroke: {
-                                            curve: 'straight',
-                                            width: 3
-                                        },
-                                        xaxis: {
-                                            categories: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
-                                                "September", "Oktober", "November", "Desember",
-                                            ]
-                                        },
-                                        tooltip: {
-                                            x: {
-                                                format: 'MM/yyyy'
-                                            },
-                                            y: {
-                                                formatter: function(val) {
-                                                    return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                                                }
+                                        y: {
+                                            formatter: function(val) {
+                                                return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
                                             }
                                         }
-                                    }).render();
-                                });
-                            </script>
-                            <!-- End Line Chart -->
-
-                        </div>
-
+                                    }
+                                }).render();
+                            });
+                        </script>
+                        <!-- End Line Chart -->
                     </div>
-                </div><!-- End Reports -->
-            @endcan
-
+                </div>
+            </div><!-- End Reports -->
 
         </div>
     </div><!-- End Left side columns -->
 
     <!-- Right side columns -->
     <div class="col-lg-4">
-
         <!-- Recent Activity -->
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Riwayat Donasi</h5>
+                <h5 class="card-title">Riwayat Kas</h5>
 
                 <div class="activity">
                     @foreach ($riwayat_donasi as $item)
                         <div class="activity-item d-flex">
                             <div class="activite-label">{{ $item->created_at->diffForHumans() }}</div>
                             <i class='bi bi-circle-fill activity-badge align-self-start'
-                                style="color: {{ ['#33FF57', '#f02233', '#FFC107', '#4682B4', '#6B5E5E', '#9A8665'][$loop->index % 6] }}"></i>
+                                style="color: {{ $item->jenis_kas == 'kas masuk' ? '#33FF57' : '#f02233' }}"></i>
                             <div class="activity-content d-flex flex-column">
-                                <span>Dari <strong>{{ $item->user->user_data->nama }}</strong> Memberi Donasi
-                                    sebesar</span>
+                                <span>
+                                    @if ($item->jenis_kas == 'kas masuk')
+                                        <strong>{{ $item->donasi->nama_donatur }}</strong> Memberi Donasi sebesar
+                                    @else
+                                        <strong>{{ $item->user->username }}</strong> Menggunakan Kas sebesar
+                                    @endif
+                                </span>
                                 <span class="text-muted small">Rp
                                     {{ number_format($item->jumlah, 0, ',', '.') }}</span>
-
+                                <span class="text-muted small">{{ $item->keterangan }}</span>
                             </div>
                         </div>
                     @endforeach
                 </div>
-
             </div>
         </div><!-- End Recent Activity -->
-
     </div><!-- End Right side columns -->
-
 </x-layouts.main>

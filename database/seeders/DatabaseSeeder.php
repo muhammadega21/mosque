@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\InformasiMasjid;
+use App\Models\KasMasjid;
 use App\Models\Kategori;
-use App\Models\Transaksi;
 use App\Models\User;
-use App\Models\UserData;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,34 +21,35 @@ class DatabaseSeeder extends Seeder
         User::create([
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
-            'role' => 'pengurus'
+            'nama' => 'Admin',
+            'username' => 'admin',
+            'nomor_hp' => '081234567890',
         ]);
-        UserData::create([
-            'nama' => "Admin",
-            "nomor_hp" => "08123456789",
-            "alamat" => "Indonesia",
-            'saldo' => 20000,
-            'user_id' => 1
-        ]);
+
 
         Kategori::create([
             'nama_kategori' => 'Donasi',
         ]);
         Kategori::create([
-            'nama_kategori' => 'Isi Saldo',
+            'nama_kategori' => 'Operasional Masjid',
         ]);
         Kategori::create([
-            'nama_kategori' => 'Zakat',
+            'nama_kategori' => 'Perawatan Masjid',
         ]);
         Kategori::create([
-            'nama_kategori' => 'Iuran Masjid',
+            'nama_kategori' => 'Kegiatan Sosial',
         ]);
         Kategori::create([
-            'nama_kategori' => 'Infaq Jumat',
+            'nama_kategori' => 'Honorarium',
+        ]);
+        Kategori::create([
+            'nama_kategori' => 'Pembayaran Listrik & Air',
+        ]);
+        Kategori::create([
+            'nama_kategori' => 'Pembangunan & Renovasi',
         ]);
 
-        User::factory(20)->create();
-        Transaksi::factory(50)->create();
+        KasMasjid::factory()->count(50)->create();
 
         InformasiMasjid::create([
             'tgl_post' => now(),

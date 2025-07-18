@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaporanKeuangan;
-use App\Models\Transaksi;
+use App\Models\KasMasjid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,8 +56,7 @@ class LaporanKeuanganController extends Controller
             $end = $tanggal->copy()->endOfMonth();
         }
 
-        $total = Transaksi::whereBetween('tanggal', [$start, $end])
-            ->where('kategori_id', '!=', 2)
+        $total = KasMasjid::whereBetween('tanggal', [$start, $end])
             ->sum('jumlah');
 
         if ($total === 0) {
@@ -84,26 +83,23 @@ class LaporanKeuanganController extends Controller
 
         // Gunakan periode_start dan periode_end yang sudah disimpan
         if ($laporan->periode_start && $laporan->periode_end) {
-            $transaksi = Transaksi::whereBetween('tanggal', [
+            $transaksi = KasMasjid::whereBetween('tanggal', [
                 $laporan->periode_start,
                 $laporan->periode_end
-            ])->where('kategori_id', '!=', 2)->get();
+            ])->get();
         } else {
             // Fallback untuk data lama
             $tanggal = Carbon::parse($laporan->tanggal);
 
             if ($laporan->laporan_periodik === 'hari') {
-                $transaksi = Transaksi::whereDate('tanggal', $tanggal)
-                    ->where('kategori_id', '!=', 2)->get();
+                $transaksi = KasMasjid::whereDate('tanggal', $tanggal)->get();
             } elseif ($laporan->laporan_periodik === 'minggu') {
                 $startOfWeek = $tanggal->copy()->startOfWeek(Carbon::MONDAY);
                 $endOfWeek = $tanggal->copy()->endOfWeek(Carbon::SUNDAY);
-                $transaksi = Transaksi::whereBetween('tanggal', [$startOfWeek, $endOfWeek])
-                    ->where('kategori_id', '!=', 2)->get();
+                $transaksi = KasMasjid::whereBetween('tanggal', [$startOfWeek, $endOfWeek])->get();
             } elseif ($laporan->laporan_periodik === 'bulan') {
-                $transaksi = Transaksi::whereYear('tanggal', $tanggal->year)
+                $transaksi = KasMasjid::whereYear('tanggal', $tanggal->year)
                     ->whereMonth('tanggal', $tanggal->month)
-                    ->where('kategori_id', '!=', 2)
                     ->get();
             } else {
                 $transaksi = collect();

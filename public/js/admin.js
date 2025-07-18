@@ -104,43 +104,14 @@ $(document).ready(function () {
         $("#oldImage").val(informasi.gambar);
     });
 
-    $("#cekBukti").on("show.bs.modal", function (event) {
+    $("#showBuktiDonasi").on("show.bs.modal", function (event) {
         var button = $(event.relatedTarget);
-        var transaksi = button.data("bukti");
         var modal = $(this);
 
-        // Format number dengan titik sebagai pemisah ribuan
-        var jumlahFormat = new Intl.NumberFormat("id-ID").format(
-            transaksi.jumlah
-        );
-
-        // Set data ke modal
-        modal
-            .find("#buktiPembayaranImg")
-            .attr(
-                "src",
-                transaksi.gambar
-                    ? "/storage/" + transaksi.gambar
-                    : "https://via.placeholder.com/500x300?text=Bukti+Tidak+Tersedia"
-            );
-        modal.find("#jenisTransaksiText").text(transaksi.jenis_transaksi);
-        modal.find("#jumlahTransaksiText").text(jumlahFormat);
-        modal.find("#tanggalTransaksiText").text(transaksi.tanggal);
-        modal.find("#statusTransaksiText").text(transaksi.status_transaksi);
-        modal
-            .find("#keteranganTransaksiText")
-            .text(transaksi.keterangan || "-");
-        modal.find("#transaksiId").val(transaksi.id);
-        modal.find("#userId").val(transaksi.user_id);
-        modal.find("#jumlah").val(transaksi.jumlah);
-        modal.find("#originalAmount").val(transaksi.jumlah);
-
-        // Tampilkan tombol action hanya untuk status pending
-        if (transaksi.status_transaksi === "pending") {
-            modal.find("#actionButtons").show();
-        } else {
-            modal.find("#actionButtons").hide();
-        }
+        modal.find("#buktiDonasiImage").attr("src", button.data("gambar"));
+        modal.find("#donaturNama").text(button.data("nama"));
+        modal.find("#donaturTanggal").text(button.data("tanggal"));
+        modal.find("#donaturJumlah").text(button.data("jumlah"));
     });
 });
 function approvePayment() {

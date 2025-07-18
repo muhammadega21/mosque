@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\BuktiDonasiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformasiMasjidController;
+use App\Http\Controllers\KasMasjidController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanKeuanganController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,28 +37,25 @@ Route::middleware('auth')->group(function () {
         Route::put('kategori/update/{id}', 'update');
         Route::get('kategori/delete/{id}',  'destroy');
     });
-    Route::controller(TransaksiController::class)->group(function () {
-        Route::get('keuangan', 'index');
-        Route::post('keuangan', 'store');
-        Route::put('keuangan/update/{id}', 'update');
-        Route::get('keuangan/delete/{id}',  'destroy');
-        Route::put('keuangan/approve', 'approve')->name('transaksi.approve');
-        Route::put('keuangan/reject',  'reject')->name('transaksi.reject');
-    });
+
     Route::controller(LaporanKeuanganController::class)->group(function () {
         Route::get('laporan_keuangan', 'index');
         Route::post('laporan_keuangan', 'store');
         Route::get('laporan_keuangan/{id}', 'cetak')->name('LaporanKeuangan.cetak');
         Route::get('laporan_keuangan/delete/{id}',  'destroy');
     });
-    Route::controller(DonasiController::class)->group(function () {
+    Route::controller(KasMasjidController::class)->group(function () {
+        Route::get('kas_masjid', 'index');
+        Route::post('kas_masjid', 'store');
+        Route::put('kas_masjid/update/{id}', 'update');
+        Route::get('kas_masjid/delete/{id}', 'destroy');
+    });
+
+    Route::controller(BuktiDonasiController::class)->group(function () {
         Route::get('donasi', 'index');
         Route::post('donasi', 'store');
-        Route::put('donasi/update/{id}', 'update');
-        Route::get('donasi/delete/{id}',  'destroy');
         Route::get('donasi/cetak/{id}', 'cetak');
-        Route::get('donasi/export', 'cetak');
-        Route::post('donasi/saldo', 'addSaldo');
+        Route::get('donasi/delete/{id}', 'destroy');
     });
     Route::controller(KegiatanController::class)->group(function () {
         Route::get('kegiatan_masjid', 'index');

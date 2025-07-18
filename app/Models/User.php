@@ -20,7 +20,10 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'role',
+        'nama',
+        'username',
+        'nomor_hp',
+
     ];
 
     /**
@@ -44,10 +47,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function user_data()
-    {
-        return $this->hasOne(UserData::class);
     }
 }

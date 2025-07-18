@@ -93,10 +93,6 @@
 
     <!-- My JS File -->
     <script src="{{ asset('js/script.js') }}"></script>
-
-    @canany(['pengurus'])
-        <script src="{{ asset('js/admin.js') }}"></script>
-    @endcanany
 </body>
 
 </html>

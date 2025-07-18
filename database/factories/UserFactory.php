@@ -37,9 +37,7 @@ class UserFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (User $user) {
-            UserData::factory()->create([
-                'user_id' => $user->id,
-            ]);
+            // 
         });
     }
 

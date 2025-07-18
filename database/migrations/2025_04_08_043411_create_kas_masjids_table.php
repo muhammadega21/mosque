@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksi', function (Blueprint $table) {
+        Schema::create('kas_masjid', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal')->default(now());
-            $table->string('jenis_transaksi');
+            $table->enum('jenis_kas', ['kas masuk', 'kas keluar']);
             $table->integer('jumlah');
             $table->string('keterangan');
-            $table->enum('status_transaksi', ['selesai', 'pending', 'batal'])->default('pending');
-            $table->string('gambar')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('kategori_id');
+            $table->unsignedBigInteger('donasi_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('kategori_id')->references('id')->on('kategori');
+            $table->foreign('donasi_id')->references('id')->on('bukti_donasi');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('kas_masjid');
     }
 };
