@@ -30,110 +30,105 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($kas_masjid) < 1)
-                                    <tr>
-                                        <td colspan="9" class="text-center">Data Kosong</td>
+                                @if (count($kas_masjid) < 1) <tr>
+                                    <td colspan="9" class="text-center">Data Kosong</td>
                                     </tr>
-                                @else
+                                    @else
                                     @foreach ($kas_masjid as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration + $kas_masjid->firstItem() - 1 }}</td>
-                                            <td>{{ $item->jenis_kas }}</td>
-                                            <td>{{ $item->kategori->nama_kategori }}</td>
-                                            <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
-                                            <td>{{ $item->keterangan }}</td>
-                                            <td>{{ $item->tanggal }}</td>
-                                            @if ($item->jenis_kas == 'kas masuk')
-                                                <td>{{ $item->donasi->nama_donatur }}</td>
-                                            @else
-                                                <td>{{ $item->user->nama }}</td>
-                                            @endif
-                                            <td>
-                                                <div class="d-flex gap-1">
-                                                    @if ($item->jenis_kas == 'kas masuk' && $item->donasi)
-                                                        <button type="button"
-                                                            class="badge bg-light border-primary border"
-                                                            data-bs-toggle="modal" data-bs-target="#showBuktiDonasi"
-                                                            data-gambar="{{ asset('storage/' . $item->donasi->gambar) }}"
-                                                            data-nama="{{ $item->donasi->nama_donatur }}"
-                                                            data-tanggal="{{ $item->donasi->tanggal }}"
-                                                            data-jumlah="Rp {{ number_format($item->jumlah, 0, ',', '.') }}">
-                                                            <span class="fw-semibold"><i
-                                                                    class="bx bxs-show text-primary"></i></span>
-                                                        </button>
-                                                    @endif
-                                                    <button type="button" class="badge bg-light border-warning border"
-                                                        data-bs-toggle="modal" data-bs-target="#updateKasMasjid"
-                                                        data-kas="{{ $item }}"
-                                                        data-kategori="{{ $kategori }}">
-                                                        <span class="fw-semibold"><i
-                                                                class="bx bxs-edit text-warning"></i></span>
-                                                    </button>
-                                                    <a href="{{ url('kas-masjid/delete/' . $item->id) }}"
-                                                        class="badge border-danger border" onclick="confirm(event)"><i
-                                                            class='bx bxs-trash text-danger'></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration + $kas_masjid->firstItem() - 1 }}</td>
+                                        <td>{{ $item->jenis_kas }}</td>
+                                        <td>{{ $item->kategori->nama_kategori }}</td>
+                                        <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
+                                        <td>{{ $item->keterangan }}</td>
+                                        <td>{{ $item->tanggal }}</td>
+                                        @if ($item->jenis_kas == 'kas masuk')
+                                        <td>{{ $item->donasi->nama_donatur }}</td>
+                                        @else
+                                        <td>{{ $item->user->nama }}</td>
+                                        @endif
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                @if ($item->jenis_kas == 'kas masuk' && $item->donasi)
+                                                <button type="button" class="badge bg-light border-primary border"
+                                                    data-bs-toggle="modal" data-bs-target="#showBuktiDonasi"
+                                                    data-gambar="{{ asset('storage/' . $item->donasi->gambar) }}"
+                                                    data-nama="{{ $item->donasi->nama_donatur }}"
+                                                    data-tanggal="{{ $item->donasi->tanggal }}"
+                                                    data-jumlah="Rp {{ number_format($item->jumlah, 0, ',', '.') }}">
+                                                    <span class="fw-semibold"><i
+                                                            class="bx bxs-show text-primary"></i></span>
+                                                </button>
+                                                @endif
+                                                <button type="button" class="badge bg-light border-warning border"
+                                                    data-bs-toggle="modal" data-bs-target="#updateKasMasjid"
+                                                    data-kas="{{ $item }}" data-kategori="{{ $kategori }}">
+                                                    <span class="fw-semibold"><i
+                                                            class="bx bxs-edit text-warning"></i></span>
+                                                </button>
+                                                <a href="{{ url('kas-masjid/delete/' . $item->id) }}"
+                                                    class="badge border-danger border" onclick="confirm(event)"><i
+                                                        class='bx bxs-trash text-danger'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                        {{-- Modal Update Kas Masjid --}}
-                                        <x-modal modalTitle="Update Kas Masjid" modalID="updateKasMasjid" btn="Update"
-                                            action="{{ url('kas-masjid/update/' . $item->id) }}" method="POST"
-                                            method2="PUT" enctype="">
-                                            <div class="row mb-3">
-                                                <div class="input-group justify-content-between mt-3">
-                                                    <div class="input-box col-sm-6" style="max-width: 48%">
-                                                        <label class="mb-2 required">Jenis Kas</label>
-                                                        <select class="form-select" id="jenis_kas2" name="jenis_kas"
-                                                            required>
-                                                            <option value="kas masuk">Kas Masuk</option>
-                                                            <option value="kas keluar">Kas Keluar</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="input-box col-sm-6" style="max-width: 48%">
-                                                        <label for="kategori" class=" mb-2 required">Kategori</label>
-                                                        <select class="form-select" id="kategori2" name="kategori_id">
-                                                            @foreach ($kategori as $kat)
-                                                                <option value="{{ $kat->id }}">
-                                                                    {{ $kat->nama_kategori }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                    {{-- Modal Update Kas Masjid --}}
+                                    <x-modal modalTitle="Update Kas Masjid" modalID="updateKasMasjid" btn="Update"
+                                        action="{{ url('kas-masjid/update/' . $item->id) }}" method="POST" method2="PUT"
+                                        enctype="">
+                                        <div class="row mb-3">
+                                            <div class="input-group justify-content-between mt-3">
+                                                <div class="input-box col-sm-6" style="max-width: 48%">
+                                                    <label class="mb-2 required">Jenis Kas</label>
+                                                    <select class="form-select" id="jenis_kas2" name="jenis_kas"
+                                                        required>
+                                                        <option value="kas masuk">Kas Masuk</option>
+                                                        <option value="kas keluar">Kas Keluar</option>
+                                                    </select>
                                                 </div>
-                                                <div class="mt-3">
-                                                    <div class="input-box col-sm-12">
-                                                        <label for="jumlah2" class="mb-2 required">Jumlah</label>
-                                                        <input type="number" id="jumlah2" class="form-control"
-                                                            name="jumlah" placeholder="Masukkan Jumlah">
-                                                    </div>
-                                                </div>
-                                                <div class="mt-3">
-                                                    <div class="input-box col-sm-12">
-                                                        <label for="keterangan2"
-                                                            class="mb-2 required">Keterangan</label>
-                                                        <input type="text" id="keterangan2" class="form-control"
-                                                            name="keterangan" placeholder="Masukkan Keterangan">
-                                                    </div>
-                                                </div>
-                                                <div class="mt-3">
-                                                    <label for="tanggal2" class="mb-2">Tanggal</label>
-                                                    <input type="date" id="tanggal2" class="form-control"
-                                                        name="tanggal">
-                                                </div>
-                                                <div class="mt-3">
-                                                    <label class="mb-2">Status</label>
-                                                    <select class="form-select" id="status_transaksi2"
-                                                        name="status_transaksi" required>
-                                                        <option value="selesai">Selesai</option>
-                                                        <option value="pending">Pending</option>
-                                                        <option value="batal">Batal</option>
+                                                <div class="input-box col-sm-6" style="max-width: 48%">
+                                                    <label for="kategori" class=" mb-2 required">Kategori</label>
+                                                    <select class="form-select" id="kategori2" name="kategori_id">
+                                                        @foreach ($kategori as $kat)
+                                                        <option value="{{ $kat->id }}">
+                                                            {{ $kat->nama_kategori }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                        </x-modal>
-                                        {{-- Modal Update Kas Masjid --}}
+                                            <div class="mt-3">
+                                                <div class="input-box col-sm-12">
+                                                    <label for="jumlah2" class="mb-2 required">Jumlah</label>
+                                                    <input type="number" id="jumlah2" class="form-control" name="jumlah"
+                                                        placeholder="Masukkan Jumlah">
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <div class="input-box col-sm-12">
+                                                    <label for="keterangan2" class="mb-2 required">Keterangan</label>
+                                                    <input type="text" id="keterangan2" class="form-control"
+                                                        name="keterangan" placeholder="Masukkan Keterangan">
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <label for="tanggal2" class="mb-2">Tanggal</label>
+                                                <input type="date" id="tanggal2" class="form-control" name="tanggal">
+                                            </div>
+                                            <div class="mt-3">
+                                                <label class="mb-2">Status</label>
+                                                <select class="form-select" id="status_transaksi2"
+                                                    name="status_transaksi" required>
+                                                    <option value="selesai">Selesai</option>
+                                                    <option value="pending">Pending</option>
+                                                    <option value="batal">Batal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </x-modal>
+                                    {{-- Modal Update Kas Masjid --}}
                                     @endforeach
-                                @endif
+                                    @endif
                             </tbody>
                         </table>
                     </div>
@@ -157,9 +152,9 @@
                         <option value="kas keluar">Kas Keluar</option>
                     </select>
                     @error('jenis_kas')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                     @enderror
                 </div>
                 <div class="input-box col-sm-6" style="max-width: 48%">
@@ -167,14 +162,14 @@
                     <select class="form-select @error('kategori_id') is-invalid @enderror" name="kategori_id">
                         <option selected value="">- Pilih Kategori -</option>
                         @foreach ($kategori as $kat)
-                            <option value="{{ $kat->id }}" @if (old('kategori_id') == $kat->id) selected @endif>
-                                {{ $kat->nama_kategori }}</option>
+                        <option value="{{ $kat->id }}" @if (old('kategori_id')==$kat->id) selected @endif>
+                            {{ $kat->nama_kategori }}</option>
                         @endforeach
                     </select>
                     @error('kategori_id')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                     @enderror
                 </div>
             </div>
@@ -184,22 +179,21 @@
                     <input type="number" id="jumlah" class="form-control @error('jumlah') is-invalid @enderror"
                         name="jumlah" placeholder="Masukkan Jumlah" value="{{ old('jumlah') }}">
                     @error('jumlah')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                     @enderror
                 </div>
             </div>
             <div class="mt-3">
                 <div class="input-box col-sm-12">
                     <label for="keterangan" class="mb-2 required">Keterangan</label>
-                    <input type="text" id="keterangan"
-                        class="form-control @error('keterangan') is-invalid @enderror" name="keterangan"
-                        placeholder="Masukkan Keterangan" value="{{ old('keterangan') }}">
+                    <input type="text" id="keterangan" class="form-control @error('keterangan') is-invalid @enderror"
+                        name="keterangan" placeholder="Masukkan Keterangan" value="{{ old('keterangan') }}">
                     @error('keterangan')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                     @enderror
                 </div>
             </div>
@@ -208,9 +202,9 @@
                 <input type="date" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror"
                     name="tanggal" value="{{ old('tanggal', date('Y-m-d')) }}">
                 @error('tanggal')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
                 @enderror
             </div>
             <div class="mt-3">
@@ -219,9 +213,9 @@
                     class="form-control @error('bukti_pembayaran') is-invalid @enderror" name="bukti_pembayaran"
                     accept="image/*,application/pdf">
                 @error('bukti_pembayaran')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
                 @enderror
             </div>
         </div>
@@ -241,8 +235,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <img id="buktiDonasiImage" src="" class="img-fluid rounded"
-                                    alt="Bukti Donasi">
+                                <img id="buktiDonasiImage" src="" class="img-fluid rounded" alt="Bukti Donasi">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -266,41 +259,41 @@
 
     {{-- Modal Error --}}
     @if (session('addKasMasjid'))
-        <script>
-            toastr.error("{{ Session::get('addKasMasjid') }}");
+    <script>
+        toastr.error("{{ Session::get('addKasMasjid') }}");
             $(document).ready(function() {
                 $('#addKasMasjid').modal('show');
             });
-        </script>
+    </script>
     @endif
 
     @if (session('updateKasMasjid'))
-        <script>
-            swal("Error!", "{{ Session::get('updateKasMasjid') }}", "error"), {
+    <script>
+        swal("Error!", "{{ Session::get('updateKasMasjid') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
             @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}");
             @endforeach
-        </script>
+    </script>
     @endif
 
     {{-- Alert --}}
     @if (Session::has('success'))
-        <script>
-            swal("Success!", "{{ Session::get('success') }}", "success"), {
+    <script>
+        swal("Success!", "{{ Session::get('success') }}", "success"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @elseif (Session::has('error'))
-        <script>
-            swal("Error!", "{{ Session::get('error') }}", "error"), {
+    <script>
+        swal("Error!", "{{ Session::get('error') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @endif
 
     <script>
