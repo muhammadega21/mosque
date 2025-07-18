@@ -64,6 +64,8 @@ class HomeController extends Controller
         $total_user = User::all()->count();
         $kegiatan_masjid = InformasiMasjid::latest()->where('kategori', 'kegiatan')->take(6);
         $informasi_masjid = InformasiMasjid::latest()->where('kategori', 'informasi')->take(6);
+        $kas_masjid = KasMasjid::orderBy('created_at', 'desc')
+            ->paginate(15);
 
         return view('landing_page.index', [
             'title' => "DokuMosque | Masjid Al-Hamujirin",
@@ -71,6 +73,7 @@ class HomeController extends Controller
             'donatur' => $total_user,
             'kegiatan_masjid' => $kegiatan_masjid->get(),
             'informasi_masjid' => $informasi_masjid->get(),
+            'kas_masjid' => $kas_masjid,
         ]);
     }
 }

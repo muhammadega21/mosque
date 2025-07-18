@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
-    <script src='https://cdn.tailwindcss.com'></script>
+    {{-- <script src='https://cdn.tailwindcss.com'></script> --}}
+    <script src='https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap');
 
@@ -47,43 +48,60 @@
         {{-- Donation --}}
         <section class="donation h-full my-16">
             <div class="donation-card flex flex-col items-center justify-center px-[9%]">
-                <div class="overflow-x-auto">
-                    <table class="table">
-                        <thead>
+                <div class="mb-6">
+                    <h1 class="text-4xl font-bold text-gray-800 text-center">Data Kas Masjid</h1>
+                </div>
+                <div class="overflow-x-auto w-full">
+                    <table class="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+                        <thead class="bg-[#019961] text-white">
                             <tr>
-                                <th>No</th>
-                                <th>Tanggal</th>
-                                <th>Jenis Kas</th>
-                                <th>Kategori</th>
-                                <th>User</th>
-                                <th>Jumlah</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">No</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tanggal
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jenis Kas
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Kategori
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">User</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @if (count($kas_masjid) < 1) <tr>
-                                <td colspan="9" class="text-center">Data Kosong</td>
-                                </tr>
-                                @else
-                                @foreach ($kas_masjid as $item)
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @if (count($kas_masjid) < 1)
                                 <tr>
-                                    <td>{{ $loop->iteration + $kas_masjid->firstItem() - 1 }}</td>
-                                    <td>{{ $item->tanggal }}</td>
-                                    <td>{{ $item->jenis_kas }}</td>
-                                    <td>{{ $item->kategori->nama_kategori }}</td>
-                                    @if ($item->jenis_kas == 'kas masuk')
-                                    <td>{{ $item->donasi->nama_donatur }}</td>
-                                    @else
-                                    <td>{{ $item->user->nama }}</td>
-                                    @endif
-                                    <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
+                                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                                        Data Kosong</td>
                                 </tr>
+                            @else
+                                @foreach ($kas_masjid as $item)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $loop->iteration + $kas_masjid->firstItem() - 1 }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->tanggal }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->jenis_kas }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->kategori->nama_kategori }}
+                                        </td>
+                                        @if ($item->jenis_kas == 'kas masuk')
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $item->donasi->nama_donatur }}
+                                            </td>
+                                        @else
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $item->user->nama }}</td>
+                                        @endif
+                                        <td class="px-6 py-4 whitespace-nowrap">Rp
+                                            {{ number_format($item->jumlah, 2, ',', '.') }}</td>
+                                    </tr>
                                 @endforeach
-                                @endif
+                            @endif
                         </tbody>
                     </table>
                 </div>
+
+                {{-- Pagination dengan style --}}
+                <div class="mt-8 w-full px-[9%]">
+                    {{ $kas_masjid->onEachSide(1)->links('pagination::tailwind') }}
+                </div>
+            </div>
         </section>
-        {{ $kas_masjid->links() }}
         {{-- End Donation --}}
 
         <hr class="border border-gray-300 w-[80%] rounded-full mx-auto my-10">
@@ -93,22 +111,22 @@
             <h1 class="text-4xl font-bold text-gray-800 text-center">Kegiatan Masjid</h1>
             <div class="grid grid-cols-3 mt-10 gap-y-10 gap-x-5 items-start">
                 @foreach ($kegiatan_masjid as $data)
-                <div
-                    class="kegiatan-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
-                    <div class="kegiatan-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
-                        <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Kegiatan Masjid"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="kegiatan-card-content text-center mt-5 px-4 pb-10 relative w-full">
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
-                            <p class="text-base text-gray-600 mt-2 text-center">{{ $data->deskripsi }}</p>
+                    <div
+                        class="kegiatan-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
+                        <div class="kegiatan-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
+                            <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Kegiatan Masjid"
+                                class="w-full h-full object-cover">
                         </div>
-                        <button type="button"
-                            class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
-                            Detail</a>
+                        <div class="kegiatan-card-content text-center mt-5 px-4 pb-10 relative w-full">
+                            <div class="mb-8">
+                                <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
+                                <p class="text-base text-gray-600 mt-2 text-center">{{ $data->deskripsi }}</p>
+                            </div>
+                            <button type="button"
+                                class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
+                                Detail</a>
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         </section>
@@ -121,22 +139,22 @@
             <h1 class="text-4xl font-bold text-gray-800 text-center">Informasi Masjid</h1>
             <div class="grid grid-cols-3 mt-10 gap-y-10 gap-x-5 items-start">
                 @foreach ($informasi_masjid as $data)
-                <div
-                    class="informasi-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
-                    <div class="informasi-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
-                        <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Informasi Masjid"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="informasi-card-content text-center mt-5 px-4 pb-10 relative w-full">
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
-                            <p class="text-base text-gray-600 mt-2 text-justify">{{ $data->deskripsi }}</p>
+                    <div
+                        class="informasi-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
+                        <div class="informasi-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
+                            <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Informasi Masjid"
+                                class="w-full h-full object-cover">
                         </div>
-                        <button type="button"
-                            class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
-                            Detail</a>
+                        <div class="informasi-card-content text-center mt-5 px-4 pb-10 relative w-full">
+                            <div class="mb-8">
+                                <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
+                                <p class="text-base text-gray-600 mt-2 text-justify">{{ $data->deskripsi }}</p>
+                            </div>
+                            <button type="button"
+                                class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
+                                Detail</a>
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         </section>
