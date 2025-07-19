@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 // Landing Page
 Route::get('/', [HomeController::class, 'landingPage'])->name('landingPage');
+Route::post('/donasi', [HomeController::class, 'donasi'])->name('donasi');
 
 // Auth
 Route::controller(LoginController::class)->group(function () {
@@ -26,10 +27,10 @@ Route::controller(LoginController::class)->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::controller(UserController::class)->group(function () {
-        Route::get('jamaah', 'index');
-        Route::post('jamaah', 'store');
-        Route::put('jamaah/update/{id}', 'update');
-        Route::get('jamaah/delete/{id}',  'destroy');
+        Route::get('pengurus', 'index');
+        Route::post('pengurus', 'store');
+        Route::put('pengurus/update/{id}', 'update');
+        Route::get('pengurus/delete/{id}',  'destroy');
     });
     Route::controller(KategoriController::class)->group(function () {
         Route::get('kategori', 'index');
@@ -49,13 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::post('kas_masjid', 'store');
         Route::put('kas_masjid/update/{id}', 'update');
         Route::get('kas_masjid/delete/{id}', 'destroy');
-    });
-
-    Route::controller(BuktiDonasiController::class)->group(function () {
-        Route::get('donasi', 'index');
-        Route::post('donasi', 'store');
-        Route::get('donasi/cetak/{id}', 'cetak');
-        Route::get('donasi/delete/{id}', 'destroy');
+        Route::put('kas_masjid/validasi_donasi/{id}', 'validasiDonasi');
     });
     Route::controller(KegiatanController::class)->group(function () {
         Route::get('kegiatan_masjid', 'index');

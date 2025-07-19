@@ -15,14 +15,15 @@ return new class extends Migration
             $table->id();
             $table->date('tanggal')->default(now());
             $table->enum('jenis_kas', ['kas masuk', 'kas keluar']);
-            $table->integer('jumlah');
+            $table->integer('jumlah')->nullable();
             $table->string('keterangan');
+            $table->enum('status_validasi', ['pending', 'selesai'])->default('pending');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('kategori_id');
-            $table->unsignedBigInteger('donasi_id');
+            $table->unsignedBigInteger('donasi_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('kategori_id')->references('id')->on('kategori');
-            $table->foreign('donasi_id')->references('id')->on('bukti_donasi');
+            $table->foreign('donasi_id')->references('id')->on('bukti_donasi')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

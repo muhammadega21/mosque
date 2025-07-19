@@ -17,21 +17,23 @@ function confirm(e) {
 }
 
 $(document).ready(function () {
-    $("#updateJamaah").on("show.bs.modal", function (event) {
+    $("#updatePengurus").on("show.bs.modal", function (event) {
         const button = $(event.relatedTarget);
-        const jamaah = button.data("jamaah");
-        const idJamaah = jamaah.id;
+        const pengurus = button.data("pengurus");
+        const idPengurus = pengurus.id;
 
-        $("#updateJamaah form").attr("action", "jamaah/update/" + idJamaah);
-
-        $("#nama2").val(jamaah.user_data.nama);
-        $("#nomor_hp2").val(jamaah.user_data.nomor_hp);
-        $("#alamat2").val(jamaah.user_data.alamat);
+        $("#updatePengurus form").attr(
+            "action",
+            "pengurus/update/" + idPengurus
+        );
+        $("#nama2").val(pengurus.nama);
+        $("#username2").val(pengurus.username);
+        $("#nomor_hp2").val(pengurus.nomor_hp);
     });
     $("#updateKategori").on("show.bs.modal", function (event) {
         const button = $(event.relatedTarget);
         const kategori = button.data("kategori");
-        const idKategori = kategori.id;
+        const idPengurus = kategori.id;
 
         $("#updateKategori form").attr(
             "action",
@@ -40,17 +42,14 @@ $(document).ready(function () {
 
         $("#nama_kategori2").val(kategori.nama_kategori);
     });
-    $("#updateKeuangan").on("show.bs.modal", function (event) {
+    $("#updateKasMasjid").on("show.bs.modal", function (event) {
         const button = $(event.relatedTarget);
-        const keuangan = button.data("keuangan");
+        const kas = button.data("kas");
         const kategori = button.data("kategori");
 
         // Set form action URL
         const form = $(this).find("form");
-        form.attr("action", "keuangan/update/" + keuangan.id);
-
-        // Set form values
-        $("#jenis_transaksi2").val(keuangan.jenis_transaksi);
+        form.attr("action", "kas_masjid/update/" + kas.id);
 
         // Populate kategori options
         const kategoriSelect = $("#kategori2");
@@ -61,15 +60,15 @@ $(document).ready(function () {
                     kategori.nama_kategori,
                     kategori.id,
                     false,
-                    kategori.id === keuangan.kategori_id
+                    kategori.id === kas.kategori_id
                 )
             );
         });
 
-        $("#jumlah2").val(keuangan.jumlah);
-        $("#keterangan2").val(keuangan.keterangan);
-        $("#tanggal2").val(keuangan.tanggal);
-        $("#status_transaksi2").val(keuangan.status_transaksi);
+        $("#jumlah2").val(kas.jumlah);
+        $("#keterangan2").val(kas.keterangan);
+        $("#tanggal2").val(kas.tanggal);
+        $("#status_transaksi2").val(kas.status_transaksi);
     });
 
     $("#updateKegiatan").on("show.bs.modal", function (event) {
@@ -112,6 +111,20 @@ $(document).ready(function () {
         modal.find("#donaturNama").text(button.data("nama"));
         modal.find("#donaturTanggal").text(button.data("tanggal"));
         modal.find("#donaturJumlah").text(button.data("jumlah"));
+    });
+
+    $("#showValidasiDonasi").on("show.bs.modal", function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+
+        $("#showValidasiDonasi form").attr(
+            "action",
+            "kas_masjid/validasi_donasi/" + button.data("id")
+        );
+
+        modal.find("#buktiDonasiImage").attr("src", button.data("gambar"));
+        modal.find("#donaturNama").text(button.data("nama"));
+        modal.find("#donaturTanggal").text(button.data("tanggal"));
     });
 });
 function approvePayment() {

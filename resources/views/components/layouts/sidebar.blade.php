@@ -12,13 +12,18 @@
 
         <li class="nav-heading">Pages</li>
         <li class="nav-item">
-            <a class="nav-link  {{ Request::is(['jamaah', 'kategori', 'keuangan', 'laporan_keuangan', 'kegiatan_masjid', 'informasi_masjid']) ? 'active' : 'collapsed' }}"
+            <a class="nav-link  {{ Request::is(['pengurus', 'kategori', 'kas_masjid', 'laporan_keuangan', 'kegiatan_masjid', 'informasi_masjid']) ? 'active' : 'collapsed' }}"
                 data-bs-target="#master-data" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="master-data"
-                class="nav-content collapse {{ Request::is(['jamaah*', 'kategori*', 'keuangan*', 'laporan_keuangan*', 'kegiatan_masjid*', 'informasi_masjid*']) ? 'show' : '' }}"
+                class="nav-content collapse {{ Request::is(['pengurus*', 'kategori*', 'kas_masjid*', 'laporan_keuangan*', 'kegiatan_masjid*', 'informasi_masjid*']) ? 'show' : '' }}"
                 data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ url('pengurus') }}" class="{{ Request::is('pengurus') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Data Pengurus</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url('kategori') }}" class="{{ Request::is('kategori') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Data Kategori</span>

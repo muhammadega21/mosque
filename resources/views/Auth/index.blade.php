@@ -90,21 +90,10 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-12">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="remember" name="remember">
-                                            <label class="form-check-label" for="remember">
-                                                Remember me
-                                            </label>
-                                        </div>
 
                                         <div class="col-12">
                                             <button class="btn btn-success w-100" type="submit">Login</button>
                                         </div>
-                                        <p class="mt-1 text-center" style="font-size: 14px">Belum punya akun? <a
-                                                href="{{ url('/signup') }}">Sign
-                                                Up</a>
-                                        </p>
 
                                     </form>
 

@@ -19,13 +19,17 @@
 
         .periode {
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: 20px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+
         }
 
         th,
@@ -79,7 +83,7 @@
 
 <body onload="window.print()">
 
-    <h2>Laporan Keuangan</h2>
+    <h2>Laporan Keuangan Masjid Al-Hamujirin</h2>
 
     <div class="periode">
         @if ($laporan->laporan_periodik == 'hari')
@@ -90,16 +94,18 @@
         @elseif ($laporan->laporan_periodik == 'bulan')
             <p>Bulan: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('F Y') }}</p>
         @endif
+        <p>Tanggal Cetak : {{ now()->locale('id_ID')->translatedFormat('d F Y') }}</p>
     </div>
+
 
     <table>
         <thead>
             <tr>
                 <th>No</th>
                 <th>Tanggal</th>
-                <th>Transaksi Masuk</th>
-                <th>Transaksi Keluar</th>
-                <th>Kategori</th>
+                <th>Kas Masuk (Rp)</th>
+                <th>Kas Keluar (Rp)</th>
+                <th>Total (Rp)</th>
                 <th>Keterangan</th>
             </tr>
         </thead>
@@ -109,42 +115,41 @@
                 $total_masuk = 0;
                 $total_keluar = 0;
                 $no = 1;
+                $saldo = 0;
             @endphp
             @foreach ($transaksi->sortBy('tanggal') as $i => $trx)
+                @php
+                    if ($trx->jenis_kas == 'kas masuk') {
+                        $saldo += $trx->jumlah;
+                        $total_masuk += $trx->jumlah;
+                    } else {
+                        $saldo -= $trx->jumlah;
+                        $total_keluar += $trx->jumlah;
+                    }
+                @endphp
                 <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ \Carbon\Carbon::parse($trx->tanggal)->translatedFormat('d-m-Y') }}</td>
-                    @if ($trx->jenis_transaksi == 'keluar')
-                        <td></td>
-                        <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
-                        @php
-                            $total -= $trx->jumlah;
-                            $total_keluar += $trx->jumlah;
-                        @endphp
+                    @if ($trx->jenis_kas == 'kas keluar')
+                        <td>-</td>
+                        <td>{{ $trx->jumlah }}</td>
                     @else
-                        <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
-                        <td></td>
-                        @php
-                            $total += $trx->jumlah;
-                            $total_masuk += $trx->jumlah;
-                        @endphp
+                        <td>{{ $trx->jumlah }}</td>
+                        <td>-</td>
                     @endif
-                    <td>{{ $trx->kategori->nama_kategori }}</td>
+                    <td>{{ $saldo }}</td>
                     <td>{{ $trx->keterangan }}</td>
                 </tr>
             @endforeach
             <tr class="total">
-                <td colspan="2"></td>
-                <td colspan="1">Rp {{ number_format($total_masuk, 0, ',', '.') }}</td>
-                <td colspan="1">Rp {{ number_format($total_keluar, 0, ',', '.') }}</td>
-                <td colspan="2">Total: Rp {{ number_format($total, 0, ',', '.') }}</td>
+                <td colspan="4">Total</td>
+                <td colspan="2">Rp {{ number_format($saldo, 0, ',', '.') }}</td>
             </tr>
         </tbody>
     </table>
 
     <div class="footer">
-        <p>Dicetak oleh: {{ auth()->user()->user_data->nama }}</p>
-        <p>Tanggal Cetak: {{ now()->locale('id_ID')->translatedFormat('d F Y') }}</p>
+        <p>Dicetak oleh: {{ auth()->user()->nama }}</p>
     </div>
 
     <div class="no-print" style="text-align:center; margin-top: 30px;">

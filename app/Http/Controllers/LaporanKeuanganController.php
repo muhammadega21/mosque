@@ -92,13 +92,13 @@ class LaporanKeuanganController extends Controller
             $tanggal = Carbon::parse($laporan->tanggal);
 
             if ($laporan->laporan_periodik === 'hari') {
-                $transaksi = KasMasjid::whereDate('tanggal', $tanggal)->get();
+                $transaksi = KasMasjid::where('status_validasi', 'selesai')->whereDate('tanggal', $tanggal)->get();
             } elseif ($laporan->laporan_periodik === 'minggu') {
                 $startOfWeek = $tanggal->copy()->startOfWeek(Carbon::MONDAY);
                 $endOfWeek = $tanggal->copy()->endOfWeek(Carbon::SUNDAY);
-                $transaksi = KasMasjid::whereBetween('tanggal', [$startOfWeek, $endOfWeek])->get();
+                $transaksi = KasMasjid::where('status_validasi', 'selesai')->whereBetween('tanggal', [$startOfWeek, $endOfWeek])->get();
             } elseif ($laporan->laporan_periodik === 'bulan') {
-                $transaksi = KasMasjid::whereYear('tanggal', $tanggal->year)
+                $transaksi = KasMasjid::where('status_validasi', 'selesai')->whereYear('tanggal', $tanggal->year)
                     ->whereMonth('tanggal', $tanggal->month)
                     ->get();
             } else {

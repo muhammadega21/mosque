@@ -8,6 +8,9 @@
     <title>{{ $title }}</title>
     {{-- <script src='https://cdn.tailwindcss.com'></script> --}}
     <script src='https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap');
 
@@ -21,6 +24,75 @@
     <header>
         @include('landing_page.navbar')
     </header>
+
+    {{-- Start Modal Donasi --}}
+    <div id="donationModal" class="fixed inset-0 z-50 shadow-md hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-white-100 bg-opacity-40 backdrop-blur-sm"></div>
+            </div>
+
+            <!-- Modal content -->
+            <div
+                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative z-15">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Formulir Donasi</h3>
+
+                    <form id="donationForm" action="{{ url('donasi') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('POST')
+                        <!-- Name Input -->
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <input id="anonymousCheckbox" type="checkbox" name="anonymousCheckbox"
+                                    class="h-4 w-4 text-[#019961] focus:ring-[#019961] border-gray-300 rounded cursor-pointer">
+                                <label for="anonymousCheckbox" class="ml-2 block text-sm text-gray-700">Sembunyikan
+                                    nama (Hamba Allah)</label>
+                            </div>
+                            <div id="nameInputContainer">
+                                <label for="nama_donatur" class="block text-sm font-medium text-gray-700">Nama
+                                    Donatur</label>
+                                <input type="text" name="nama_donatur" id="nama_donatur"
+                                    class="mt-1 py-2 px-6 focus:ring-[#019961] focus:border-[#019961] block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                    placeholder="Masukkan nama donatur">
+                            </div>
+                        </div>
+
+                        <!-- Proof Upload -->
+                        <div class="mb-4">
+                            <label for="gambar" class="block text-sm font-medium text-gray-700">Bukti
+                                Pembayaran</label>
+                            <div class="mt-1 flex items-center">
+                                <input type="file" name="gambar" id="gambar" required accept="image/*"
+                                    class="focus:ring-[#019961] focus:border-[#019961] block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#019961] file:text-white hover:file:bg-[#249b6f] cursor-pointer">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">Format: JPG, PNG (Maks. 2MB)</p>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-5 sm:mt-6">
+                            <button type="submit"
+                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#019961] text-base font-medium text-white hover:bg-[#249b6f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#019961] sm:text-sm cursor-pointer">
+                                Kirim Donasi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Close Button -->
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" onclick="closeModal()"
+                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#019961] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm cursor-pointer">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- End Modal Donasi --}}
+
     <main>
         {{-- Hero --}}
         <section class="hero relative h-screen overflow-hidden">
@@ -36,9 +108,9 @@
                                 terus
                                 mengalir</h2>
                         </div>
-                        <a href="/dashboard"
-                            class="text-xl font-semibold uppercase border border-transparent bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 rounded-full px-8 py-4 w-max">Donasi
-                            Sekarang</a>
+                        <button type="button"
+                            class="text-xl font-semibold uppercase border border-transparent bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 rounded-full px-8 py-4 w-max cursor-pointer">Donasi
+                            Sekarang</button>
                     </div>
                 </div>
             </div>
@@ -76,7 +148,7 @@
                                 @foreach ($kas_masjid as $item)
                                     <tr class="hover:bg-gray-50">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ $loop->iteration + $kas_masjid->firstItem() - 1 }}</td>
+                                            {{ $loop->iteration }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->tanggal }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->jenis_kas }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->kategori->nama_kategori }}
@@ -85,7 +157,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $item->donasi->nama_donatur }}
                                             </td>
                                         @else
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $item->user->nama }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">Pengurus</td>
                                         @endif
                                         <td class="px-6 py-4 whitespace-nowrap">Rp
                                             {{ number_format($item->jumlah, 2, ',', '.') }}</td>
@@ -94,11 +166,6 @@
                             @endif
                         </tbody>
                     </table>
-                </div>
-
-                {{-- Pagination dengan style --}}
-                <div class="mt-8 w-full px-[9%]">
-                    {{ $kas_masjid->onEachSide(1)->links('pagination::tailwind') }}
                 </div>
             </div>
         </section>
@@ -160,6 +227,54 @@
         </section>
         {{-- End Informasi Masjid --}}
 
+        {{-- Alert --}}
+        @if (Session::has('success'))
+            <script>
+                swal("Success!", "{{ Session::get('success') }}", "success"), {
+                    button: true,
+                    button: 'ok'
+                }
+            </script>
+        @elseif (Session::has('error'))
+            <script>
+                swal("Error!", "{{ Session::get('error') }}", "error"), {
+                    button: true,
+                    button: 'ok'
+                }
+            </script>
+        @endif
+
+        <script>
+            // Toggle name input based on checkbox
+            document.getElementById('anonymousCheckbox').addEventListener('change', function() {
+                const nameInputContainer = document.getElementById('nameInputContainer');
+                const nameInput = document.getElementById('nama_donatur');
+
+                if (this.checked) {
+                    nameInputContainer.classList.add('opacity-50');
+                    nameInput.disabled = true;
+                    nameInput.value = '';
+                } else {
+                    nameInputContainer.classList.remove('opacity-50');
+                    nameInput.disabled = false;
+                }
+            });
+
+            // Open modal function
+            function openDonationModal() {
+                document.getElementById('donationModal').classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+
+            // Close modal function
+            function closeModal() {
+                document.getElementById('donationModal').classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            // Add click event to donation button
+            document.querySelector('.hero button').addEventListener('click', openDonationModal);
+        </script>
 
         @include('landing_page.footer')
     </main>

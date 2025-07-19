@@ -14,6 +14,7 @@ class KasMasjid extends Model
         'jenis_kas',
         'jumlah',
         'keterangan',
+        'status_validasi',
         'user_id',
         'kategori_id',
         'donasi_id'

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_donatur');
             $table->date('tanggal')->default(now());
-            $table->string('gambar');
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }

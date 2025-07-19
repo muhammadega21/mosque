@@ -37,7 +37,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->tanggal }}</td>
                                             <td>{{ $item->laporan_periodik }}</td>
-                                            <td>{{ $item->user->user_data->nama }}</td>
+                                            <td>{{ $item->user->nama }}</td>
                                             <td>
                                                 <div class="d-flex gap-1">
                                                     <a href="{{ route('LaporanKeuangan.cetak', $item->id) }}"

@@ -19,7 +19,8 @@ class KasMasjidController extends Controller
             'title' => "Kas Masjid",
             'main_page' => '',
             'page' => 'Kas Masjid',
-            'kas_masjid' => KasMasjid::orderBy('created_at', 'desc')
+            'kas_masjid' => KasMasjid::orderByRaw("FIELD(status_validasi, 'pending', 'selesai')")
+                ->orderBy('tanggal', 'desc')
                 ->paginate(15),
             'kategori' => Kategori::all(),
         ]);
@@ -49,24 +50,21 @@ class KasMasjidController extends Controller
             'kategori_id' => $request->input('kategori_id'),
             'jumlah' => $request->input('jumlah'),
             'keterangan' => $request->input('keterangan'),
+            'status_validasi' => 'selesai',
             'user_id' => Auth::user()->id,
             'tanggal' => $request->input('tanggal'),
-            'status_transaksi' => $request->input('status_transaksi'),
-            'donasi_id' => $request->input('donasi_id') ?? null,
         ]);
 
-        return redirect('/kas-masjid')->with('success', 'Berhasil menambah Kas Masjid');
+        return redirect('/kas_masjid')->with('success', 'Berhasil menambah Kas Masjid');
     }
 
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'jenis_kas' => 'required',
             'kategori_id' => 'required',
             'jumlah' => 'required|numeric',
             'keterangan' => 'required',
         ], [
-            'jenis_kas.required' => 'Jenis Kas wajib diisi',
             'kategori_id.required' => 'Kategori wajib diisi',
             'jumlah.required' => 'Jumlah wajib diisi',
             'jumlah.numeric' => 'Jumlah harus berupa angka',
@@ -78,26 +76,47 @@ class KasMasjidController extends Controller
         }
 
         KasMasjid::where('id', $id)->update([
-            'jenis_kas' => $request->input('jenis_kas'),
             'kategori_id' => $request->input('kategori_id'),
             'jumlah' => $request->input('jumlah'),
             'keterangan' => $request->input('keterangan'),
-            'user_id' => Auth::user()->id,
             'tanggal' => $request->input('tanggal'),
-            'status_transaksi' => $request->input('status_transaksi'),
-            'donasi_id' => $request->input('donasi_id') ?? null,
         ]);
 
-        return redirect('/kas-masjid')->with('success', 'Berhasil Update Kas Masjid');
+        return redirect('/kas_masjid')->with('success', 'Berhasil Update Kas Masjid');
+    }
+
+    public function validasiDonasi(Request $request, int $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'jumlah' => 'required|numeric',
+        ], [
+            'jumlah.required' => 'Jumlah wajib diisi',
+            'jumlah.numeric' => 'Jumlah harus berupa angka',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('validasiDonasi', 'Gagal Validasi Donasi');
+        }
+
+        KasMasjid::where('donasi_id', $id)->update([
+            'status_validasi' => 'selesai',
+            'jumlah' => $request->input('jumlah'),
+        ]);
+
+        return redirect('/kas_masjid')->with('success', 'Berhasil Validasi Donasi');
     }
 
     public function destroy(int $id)
     {
         $kas = KasMasjid::find($id);
         if ($kas) {
+            if ($kas->donasi->gambar) {
+                Storage::delete($kas->donasi->gambar);
+            }
+            BuktiDonasi::where('id', $kas->donasi_id)->delete();
             $kas->delete();
-            return redirect('/kas-masjid')->with('success', 'Berhasil Menghapus Kas Masjid');
+            return redirect('/kas_masjid')->with('success', 'Berhasil Menghapus Kas Masjid');
         }
-        return redirect('/kas-masjid')->with('error', 'Kas Masjid tidak ditemukan');
+        return redirect('/kas_masjid')->with('error', 'Kas Masjid tidak ditemukan');
     }
 }

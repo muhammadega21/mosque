@@ -24,9 +24,6 @@
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('vendor/quill/quill.snow.css') }}" rel="stylesheet"> --}}
-    {{-- <link href="{{ asset('vendor/quill/quill.bubble.css') }}" rel="stylesheet"> --}}
-    {{-- <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet"> --}}
 
     {{-- CDN --}}
     <script src='https://code.jquery.com/jquery-3.7.0.min.js'
@@ -79,11 +76,6 @@
     <!-- Vendor JS Files -->
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('/vendor/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('/vendor/qrcode/qrcode.min.js') }}"></script>
-    <script src="{{ asset('/vendor/scanqrcode/html5-qrcode.min.js') }}"></script>
-    {{-- <script src="{{ asset('vendor/quill/quill.js') }}"></script> --}}
-    {{-- <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script> --}}
 
     {{-- CDN --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

@@ -38,7 +38,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->judul }}</td>
                                             <td>{{ $item->deskripsi }}</td>
-                                            <td>{{ $item->user->user_data->nama }}</td>
+                                            <td>{{ $item->user->username }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}
                                             </td>
                                             <td>

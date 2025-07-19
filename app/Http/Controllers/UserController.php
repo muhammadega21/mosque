@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UserData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    // crud jamaah dan profile
+    // crud pengurus
 
     public function index()
     {
-        return view('master.jamaah', [
-            'title' => "Donatur",
+        return view('master.pengurus', [
+            'title' => "Pengurus",
             'main_page' => '',
-            'page' => 'Donatur',
-            'jamaah' => User::where('role', 'jamaah')->orderBy('created_at', 'desc')->paginate(15),
+            'page' => 'Pengurus',
+            'pengurus' => User::orderBy('created_at', 'desc')->paginate(15),
         ]);
     }
 
@@ -28,8 +27,8 @@ class UserController extends Controller
             'password' => 'required|min:4',
             'confirm_password' => 'required|same:password',
             'nama' => 'required|min:3|max:50',
+            'username' => 'required|min:3|max:15',
             'nomor_hp' => 'required',
-            'alamat' => 'required',
         ], [
             'email.required' => 'Email wajib diisi',
             'email.email' => 'Email tidak valid',
@@ -45,56 +44,56 @@ class UserController extends Controller
             'nama.min' => 'Nama minimal 3 karakter',
             'nama.max' => 'Nama maksimal 50 karakter',
 
-            'nomor_hp.required' => 'Nomor HP wajib diisi',
+            'username.required' => 'Username wajib diisi',
+            'username.min' => 'Username minimal 3 karakter',
+            'username.max' => 'Username maksimal 15 karakter',
 
-            'alamat.required' => 'Alamat wajib diisi',
+            'nomor_hp.required' => 'Nomor HP wajib diisi',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('addJamaah', 'Gagal Menambah Jamaah');
+            return redirect()->back()->withErrors($validator)->withInput()->with('addPengurus', 'Gagal Menambah Pengurus');
         }
 
-        $user = User::create([
+        User::create([
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
-        ]);
-
-        UserData::create([
-            'user_id' => $user->id,
             'nama' => $request->input('nama'),
+            'username' => $request->input('username'),
             'nomor_hp' => $request->input('nomor_hp'),
-            'alamat' => $request->input('alamat'),
         ]);
 
-        return redirect('/jamaah')->with('success', 'Berhasil menambah Jamaah');
+        return redirect('/pengurus')->with('success', 'Berhasil menambah Pengurus');
     }
 
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|min:3|max:50',
+            'username' => 'required|min:3|max:15',
             'nomor_hp' => 'required',
-            'alamat' => 'required',
         ], [
             'nama.required' => 'Nama wajib diisi',
             'nama.min' => 'Nama minimal 3 karakter',
             'nama.max' => 'Nama maksimal 50 karakter',
 
-            'nomor_hp.required' => 'Nomor HP wajib diisi',
+            'username.required' => 'Username wajib diisi',
+            'username.min' => 'Username minimal 3 karakter',
+            'username.max' => 'Username maksimal 15 karakter',
 
-            'alamat.required' => 'Alamat wajib diisi',
+            'nomor_hp.required' => 'Nomor HP wajib diisi',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('updateJamaah', 'Gagal Update Jamaah');
+            return redirect()->back()->withErrors($validator)->withInput()->with('updatePengurus', 'Gagal Update Pengurus');
         }
 
-        UserData::where('id', $id)->update([
+        User::where('id', $id)->update([
             'nama' => $request->input('nama'),
+            'username' => $request->input('username'),
             'nomor_hp' => $request->input('nomor_hp'),
-            'alamat' => $request->input('alamat'),
         ]);
-        return redirect('/jamaah')->with('success', 'Berhasil Update Jamaah');
+        return redirect('/pengurus')->with('success', 'Berhasil Update Pengurus');
     }
 
     public function destroy(int $id)
@@ -102,10 +101,9 @@ class UserController extends Controller
         $user = User::find($id);
         if ($user) {
             $user->delete();
-            UserData::where('user_id', $id)->delete();
-            return redirect('/jamaah')->with('success', 'Berhasil Menghapus Jamaah');
+            return redirect('/pengurus')->with('success', 'Berhasil Menghapus Pengurus');
         } else {
-            return redirect('/jamaah')->with('error', 'Jamaah tidak ditemukan');
+            return redirect('/pengurus')->with('error', 'Pengurus tidak ditemukan');
         }
     }
 }

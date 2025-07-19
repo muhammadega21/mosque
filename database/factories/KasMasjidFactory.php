@@ -32,9 +32,10 @@ class KasMasjidFactory extends Factory
             'jenis_kas' => $jenis,
             'jumlah' => $jumlah,
             'keterangan' => $this->faker->sentence(),
+            'status_validasi' => 'selesai',
             'tanggal' => $this->faker->dateTimeBetween('-6 months', 'now'),
             'kategori_id' => $kategori_id,
-            'donasi_id' => \App\Models\BuktiDonasi::factory()
+            'donasi_id' => $jenis === 'kas keluar' ? null : \App\Models\BuktiDonasi::factory(),
         ];
     }
 }
