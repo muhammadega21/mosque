@@ -127,7 +127,7 @@
                                     @if ($item->jenis_kas == 'kas masuk')
                                         <strong>{{ $item->donasi->nama_donatur }}</strong> Memberi Donasi sebesar
                                     @else
-                                        <strong>{{ $item->user->username }}</strong> Menggunakan Kas sebesar
+                                        <strong>Pengurus</strong> Menggunakan Kas sebesar
                                     @endif
                                 </span>
                                 <span class="text-muted small">Rp

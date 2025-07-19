@@ -43,7 +43,7 @@
                                             <td>{{ $item->kategori->nama_kategori }}</td>
                                             <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
                                             <td>{{ $item->keterangan }}</td>
-                                            <td>{{ $item->tanggal }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                             @if ($item->jenis_kas == 'kas masuk')
                                                 <td>{{ $item->donasi->nama_donatur }}</td>
                                             @else
@@ -110,7 +110,8 @@
                                                     <div class="input-box col-sm-6" style="max-width: 48%">
                                                         <label class="mb-2 required">Jenis Kas</label>
                                                         <select class="form-select" id="jenis_kas2" name="jenis_kas"
-                                                            required>
+                                                            disabled>
+                                                            <option value="kas keluar">Kas Masuk</option>
                                                             <option value="kas keluar">Kas Keluar</option>
                                                         </select>
                                                     </div>
@@ -278,30 +279,31 @@
                     <h5 class="modal-title" id="showValidasiDonasiLabel">Bukti Donasi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <img id="buktiDonasiImage" src="" class="img-fluid rounded"
-                                    alt="Bukti Donasi">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <h6>Informasi Donasi</h6>
-                                <hr>
-                                <div class="mb-3"
-                                    style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
-                                    <p><strong>Nama Donatur:</strong> <span id="donaturNama"></span></p>
-                                    <p><strong>Tanggal:</strong> <span id="donaturTanggal"></span></p>
+                <form action="" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <img id="buktiDonasiImage" src="" class="img-fluid rounded"
+                                        alt="Bukti Donasi">
                                 </div>
-                                <h6>Validasi Donasi</h6>
-                                <hr>
-                                <form action="" method="POST">
-                                    @csrf
-                                    @method('PUT')
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <h6>Informasi Donasi</h6>
+                                    <hr>
+                                    <div class="mb-3"
+                                        style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+                                        <p><strong>Nama Donatur:</strong> <span id="donaturNama"></span></p>
+                                        <p><strong>Tanggal:</strong> <span id="donaturTanggal"></span></p>
+                                    </div>
+                                    <h6>Validasi Donasi</h6>
+                                    <hr>
+
                                     <div style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
-                                        <div class="input-box ">
+                                        <div class="input-box">
                                             <label for="jumlah2" class="mb-2 required">Jumlah</label>
                                             <div class="input-group">
                                                 <input type="number" id="jumlah2" class="form-control"
@@ -309,18 +311,17 @@
                                                 <span class="input-group-text">Rp</span>
                                             </div>
                                         </div>
-                                        <div class="mt-3 d-flex justify-content-end">
-                                            <button class="btn btn-primary">Valiadsi</button>
-                                        </div>
                                     </div>
-                                </form>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary">Validasi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

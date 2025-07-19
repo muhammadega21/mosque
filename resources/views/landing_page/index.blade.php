@@ -36,12 +36,13 @@
             <!-- Modal content -->
             <div
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative z-15">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Formulir Donasi</h3>
+                <form id="donationForm" action="{{ url('donasi') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('POST')
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Formulir Donasi</h3>
 
-                    <form id="donationForm" action="{{ url('donasi') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('POST')
+
                         <!-- Name Input -->
                         <div class="mb-4">
                             <div class="flex items-center mb-2">
@@ -59,6 +60,30 @@
                             </div>
                         </div>
 
+                        <!-- Bank Selection -->
+                        <div class="mb-4">
+                            <label for="bank_tujuan" class="block text-sm font-medium text-gray-700">Rekening
+                                Tujuan</label>
+                            <select id="bank_tujuan"
+                                class="mt-1 py-2 px-6 focus:ring-[#019961] focus:border-[#019961] block w-full shadow-sm sm:text-sm border-gray-300 rounded-md cursor-pointer">
+                                <option value="">Pilih Bank Tujuan</option>
+                                <option value="bri">BRI</option>
+                                <option value="bca">BCA</option>
+                                <option value="mandiri">Mandiri</option>
+                                <option value="bsi">BSI</option>
+                            </select>
+                        </div>
+
+                        <!-- Bank Account Info (hidden by default) -->
+                        <div id="bankInfoContainer" class="mb-4 hidden">
+                            <div class="bg-gray-50 p-3 rounded-md">
+                                <p class="text-sm font-medium text-gray-700">Nomor Rekening:</p>
+                                <p id="noRekening" class="text-sm text-gray-600 mt-1 font-mono"></p>
+                                <p class="text-sm font-medium text-gray-700 mt-2">Atas Nama:</p>
+                                <p id="atasNama" class="text-sm text-gray-600 mt-1"></p>
+                            </div>
+                        </div>
+
                         <!-- Proof Upload -->
                         <div class="mb-4">
                             <label for="gambar" class="block text-sm font-medium text-gray-700">Bukti
@@ -70,23 +95,20 @@
                             <p class="mt-1 text-xs text-gray-500">Format: JPG, PNG (Maks. 2MB)</p>
                         </div>
 
-                        <!-- Submit Button -->
-                        <div class="mt-5 sm:mt-6">
-                            <button type="submit"
-                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#019961] text-base font-medium text-white hover:bg-[#249b6f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#019961] sm:text-sm cursor-pointer">
-                                Kirim Donasi
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
 
-                <!-- Close Button -->
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" onclick="closeModal()"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#019961] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm cursor-pointer">
-                        Tutup
-                    </button>
-                </div>
+                    <!-- Close Button -->
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
+                        <button type="button" onclick="closeModal()"
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#019961] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm cursor-pointer">
+                            Tutup
+                        </button>
+                        <button type="submit"
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#019961] text-base font-medium text-white hover:bg-[#249b6f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#019961] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm cursor-pointer">
+                            Kirim
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -149,7 +171,8 @@
                                     <tr class="hover:bg-gray-50">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{ $loop->iteration }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->tanggal }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->jenis_kas }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->kategori->nama_kategori }}
                                         </td>
@@ -245,6 +268,42 @@
         @endif
 
         <script>
+            // Bank account data
+            const bankAccounts = {
+                bri: {
+                    noRek: '1234-5678-9012-3456',
+                    name: 'Masjid Al-Hamujirin'
+                },
+                bca: {
+                    noRek: '9876-5432-1098-7654',
+                    name: 'Masjid Al-Hamujirin'
+                },
+                mandiri: {
+                    noRek: '5678-1234-9012-3456',
+                    name: 'Masjid Al-Hamujirin'
+                },
+                bsi: {
+                    noRek: '3456-7890-1234-5678',
+                    name: 'Masjid Al-Hamujirin'
+                }
+            };
+
+            // Handle bank selection change
+            document.getElementById('bank_tujuan').addEventListener('change', function() {
+                const bankInfoContainer = document.getElementById('bankInfoContainer');
+                const noRekening = document.getElementById('noRekening');
+                const atasNama = document.getElementById('atasNama');
+
+                if (this.value) {
+                    const selectedBank = bankAccounts[this.value];
+                    noRekening.textContent = selectedBank.noRek;
+                    atasNama.textContent = selectedBank.name;
+                    bankInfoContainer.classList.remove('hidden');
+                } else {
+                    bankInfoContainer.classList.add('hidden');
+                }
+            });
+
             // Toggle name input based on checkbox
             document.getElementById('anonymousCheckbox').addEventListener('change', function() {
                 const nameInputContainer = document.getElementById('nameInputContainer');

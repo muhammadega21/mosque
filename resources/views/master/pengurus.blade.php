@@ -20,8 +20,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
+                                    <th>Email</th>
                                     <th>Username</th>
+                                    <th>Nama</th>
                                     <th>No HP</th>
                                     <th>Action</th>
                                 </tr>
@@ -35,8 +36,9 @@
                                     @foreach ($pengurus as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->nama }}</td>
+                                            <td>{{ $item->email }}</td>
                                             <td>{{ $item->username }}</td>
+                                            <td>{{ $item->nama }}</td>
                                             <td>{{ $item->nomor_hp }}</td>
                                             <td>
                                                 <div class="d-flex gap-1">
@@ -54,7 +56,7 @@
                                         </tr>
 
                                         {{-- Modal Update Pengurus --}}
-                                        <x-modal modalTitle="Update Donatur" modalID="updatePengurus" btn="Update"
+                                        <x-modal modalTitle="Update Pengurus" modalID="updatePengurus" btn="Update"
                                             action="" method="POST" method2="PUT" enctype="">
                                             <div class="row mb-3">
                                                 <div class="input-box col-sm-12">
@@ -92,7 +94,7 @@
     {{ $pengurus->links() }}
 
     {{-- Modal Tambah Pengurus --}}
-    <x-modal modalTitle="Tambah Donatur" modalID="addPengurus" btn="Tambah" action="{{ url('pengurus') }}"
+    <x-modal modalTitle="Tambah Pengurus" modalID="addPengurus" btn="Tambah" action="{{ url('pengurus') }}"
         method="POST" method2="POST" enctype="">
         <div class="row mb-3">
             <div class="mt-3">
