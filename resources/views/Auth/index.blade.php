@@ -69,12 +69,12 @@
                                             <label for="email" class="form-label">Email</label>
                                             <div class="input-group has-validation">
                                                 <input type="text" name="email"
-                                                    class="form-control @error('email') is-invalid @enderror"
-                                                    id="email" placeholder="Masukkan Email" required>
+                                                    class="form-control @error('email') is-invalid @enderror" id="email"
+                                                    placeholder="Masukkan Email" required>
                                                 @error('email')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -85,9 +85,9 @@
                                                 class="form-control @error('password') is-invalid @enderror"
                                                 id="password" placeholder="Masukkan Password" required>
                                             @error('password')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                             @enderror
                                         </div>
 
@@ -113,19 +113,19 @@
             class="bi bi-arrow-up-short"></i></a>
 
     @if (Session::has('success'))
-        <script>
-            swal("Success!", "{{ Session::get('success') }}", "success"), {
+    <script>
+        swal("Success!", "{{ Session::get('success') }}", "success"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @elseif (Session::has('error'))
-        <script>
-            swal("Error!", "{{ Session::get('error') }}", "error"), {
+    <script>
+        swal("Error!", "{{ Session::get('error') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @endif
 
 

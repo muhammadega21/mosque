@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             'nomor_hp' => '081234567890',
         ]);
 
-
         Kategori::create([
             'nama_kategori' => 'Donasi',
         ]);

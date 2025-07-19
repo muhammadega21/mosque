@@ -41,9 +41,9 @@
                                         class="form-control @error('saldo') is-invalid @enderror" name="saldo"
                                         placeholder="Masukkan Jumlah Saldo" required>
                                     @error('saldo')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                             </div>
@@ -60,9 +60,9 @@
                                         <option value="dana">Dana</option>
                                     </select>
                                     @error('metode_pembayaran')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                                 <!-- Info Rekening -->
@@ -96,9 +96,9 @@
                                         id="bukti_pembayaran" name="gambar" accept="image/*,.pdf" required>
                                     <small class="text-muted">Format: JPG, PNG, JPEG (Maks: 2MB)</small>
                                     @error('gambar')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                             </div>
@@ -132,8 +132,8 @@
 </div>
 
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
             // Reset modal state when closed
             $('#addSaldo').on('hidden.bs.modal', function() {
                 Alpine.data('modalIsiSaldo').step = 1;
@@ -149,5 +149,5 @@
                 });
             @endif
         });
-    </script>
+</script>
 @endpush

@@ -87,12 +87,12 @@
 
     <div class="periode">
         @if ($laporan->laporan_periodik == 'hari')
-            <p>Tanggal: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d F Y') }}</p>
+        <p>Tanggal: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d F Y') }}</p>
         @elseif ($laporan->laporan_periodik == 'minggu')
-            <p>Minggu: {{ \Carbon\Carbon::parse($laporan->tanggal)->startOfWeek()->translatedFormat('d F Y') }} -
-                {{ \Carbon\Carbon::parse($laporan->tanggal)->endOfWeek()->translatedFormat('d F Y') }}</p>
+        <p>Minggu: {{ \Carbon\Carbon::parse($laporan->tanggal)->startOfWeek()->translatedFormat('d F Y') }} -
+            {{ \Carbon\Carbon::parse($laporan->tanggal)->endOfWeek()->translatedFormat('d F Y') }}</p>
         @elseif ($laporan->laporan_periodik == 'bulan')
-            <p>Bulan: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('F Y') }}</p>
+        <p>Bulan: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('F Y') }}</p>
         @endif
         <p>Tanggal Cetak : {{ now()->locale('id_ID')->translatedFormat('d F Y') }}</p>
     </div>
@@ -111,35 +111,35 @@
         </thead>
         <tbody>
             @php
-                $total = 0;
-                $total_masuk = 0;
-                $total_keluar = 0;
-                $no = 1;
-                $saldo = 0;
+            $total = 0;
+            $total_masuk = 0;
+            $total_keluar = 0;
+            $no = 1;
+            $saldo = 0;
             @endphp
             @foreach ($transaksi->sortBy('tanggal') as $i => $trx)
-                @php
-                    if ($trx->jenis_kas == 'kas masuk') {
-                        $saldo += $trx->jumlah;
-                        $total_masuk += $trx->jumlah;
-                    } else {
-                        $saldo -= $trx->jumlah;
-                        $total_keluar += $trx->jumlah;
-                    }
-                @endphp
-                <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ \Carbon\Carbon::parse($trx->tanggal)->translatedFormat('d-m-Y') }}</td>
-                    @if ($trx->jenis_kas == 'kas keluar')
-                        <td>-</td>
-                        <td>{{ $trx->jumlah }}</td>
-                    @else
-                        <td>{{ $trx->jumlah }}</td>
-                        <td>-</td>
-                    @endif
-                    <td>{{ $saldo }}</td>
-                    <td>{{ $trx->keterangan }}</td>
-                </tr>
+            @php
+            if ($trx->jenis_kas == 'kas masuk') {
+            $saldo += $trx->jumlah;
+            $total_masuk += $trx->jumlah;
+            } else {
+            $saldo -= $trx->jumlah;
+            $total_keluar += $trx->jumlah;
+            }
+            @endphp
+            <tr>
+                <td>{{ $no++ }}</td>
+                <td>{{ \Carbon\Carbon::parse($trx->tanggal)->translatedFormat('d-m-Y') }}</td>
+                @if ($trx->jenis_kas == 'kas keluar')
+                <td>-</td>
+                <td>{{ $trx->jumlah }}</td>
+                @else
+                <td>{{ $trx->jumlah }}</td>
+                <td>-</td>
+                @endif
+                <td>{{ $saldo }}</td>
+                <td>{{ $trx->keterangan }}</td>
+            </tr>
             @endforeach
             <tr class="total">
                 <td colspan="4">Total</td>
