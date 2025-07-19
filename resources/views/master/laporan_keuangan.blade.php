@@ -27,29 +27,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($laporanKeuangan) < 1) <tr>
-                                    <td colspan="5" class="text-center">Data Kosong</td>
-                                    </tr>
-                                    @else
-                                    @foreach ($laporanKeuangan as $item)
+                                @if (count($laporanKeuangan) < 1)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->tanggal }}</td>
-                                        <td>{{ $item->laporan_periodik }}</td>
-                                        <td>{{ $item->user->nama }}</td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <a href="{{ route('LaporanKeuangan.cetak', $item->id) }}"
-                                                    class="badge border-warning border"><i
-                                                        class='bx bxs-file-pdf text-warning'></i></a>
-                                                <a href="{{ url('laporan_keuangan/delete/' . $item->id) }}"
-                                                    class="badge border-danger border" onclick="confirm(event)"><i
-                                                        class='bx bxs-trash text-danger'></i></a>
-                                            </div>
-                                        </td>
+                                        <td colspan="5" class="text-center">Data Kosong</td>
                                     </tr>
+                                @else
+                                    @foreach ($laporanKeuangan as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                            <td>{{ $item->laporan_periodik }}</td>
+                                            <td>{{ $item->user->nama }}</td>
+                                            <td>
+                                                <div class="d-flex gap-1">
+                                                    <a href="{{ route('LaporanKeuangan.cetak', $item->id) }}"
+                                                        class="badge border-warning border"><i
+                                                            class='bx bxs-file-pdf text-warning'></i></a>
+                                                    <a href="{{ url('laporan_keuangan/delete/' . $item->id) }}"
+                                                        class="badge border-danger border" onclick="confirm(event)"><i
+                                                            class='bx bxs-trash text-danger'></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                    @endif
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -131,28 +132,28 @@
 
     {{-- Modal Error --}}
     @if (session('addLaporanKeuangan'))
-    <script>
-        toastr.error("{{ Session::get('addLaporanKeuangan') }}");
+        <script>
+            toastr.error("{{ Session::get('addLaporanKeuangan') }}");
             $(document).ready(function() {
                 $('#addLaporanKeuangan').modal('show');
             });
-    </script>
+        </script>
     @endif
 
     {{-- Alert --}}
     @if (Session::has('success'))
-    <script>
-        swal("Success!", "{{ Session::get('success') }}", "success"), {
+        <script>
+            swal("Success!", "{{ Session::get('success') }}", "success"), {
                 button: true,
                 button: 'ok'
             }
-    </script>
+        </script>
     @elseif (Session::has('error'))
-    <script>
-        swal("Error!", "{{ Session::get('error') }}", "error"), {
+        <script>
+            swal("Error!", "{{ Session::get('error') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
-    </script>
+        </script>
     @endif
 </x-layouts.main>

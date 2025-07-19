@@ -28,75 +28,75 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($informasi) < 1) <tr>
-                                    <td colspan="5" class="text-center">Data Kosong</td>
-                                    </tr>
-                                    @else
-                                    @foreach ($informasi as $item)
+                                @if (count($informasi) < 1)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->judul }}</td>
-                                        <td>{{ $item->deskripsi }}</td>
-                                        <td>{{ $item->user->username }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <button type="button" class="badge bg-light border-warning border"
-                                                    data-bs-toggle="modal" data-bs-target="#updateInformasi"
-                                                    data-informasi="{{ $item }}">
-                                                    <span class="fw-semibold"><i
-                                                            class="bx bxs-edit text-warning"></i></span>
-                                                </button>
-                                                <a href="{{ url('informasi_masjid/delete/' . $item->id) }}"
-                                                    class="badge border-danger border" onclick="confirm(event)"><i
-                                                        class='bx bxs-trash text-danger'></i></a>
-                                            </div>
-                                        </td>
+                                        <td colspan="5" class="text-center">Data Kosong</td>
                                     </tr>
+                                @else
+                                    @foreach ($informasi as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->judul }}</td>
+                                            <td>{{ $item->deskripsi }}</td>
+                                            <td>{{ $item->user->username }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}
+                                            </td>
+                                            <td>
+                                                <div class="d-flex gap-1">
+                                                    <button type="button" class="badge bg-light border-warning border"
+                                                        data-bs-toggle="modal" data-bs-target="#updateInformasi"
+                                                        data-informasi="{{ $item }}">
+                                                        <span class="fw-semibold"><i
+                                                                class="bx bxs-edit text-warning"></i></span>
+                                                    </button>
+                                                    <a href="{{ url('informasi_masjid/delete/' . $item->id) }}"
+                                                        class="badge border-danger border" onclick="confirm(event)"><i
+                                                            class='bx bxs-trash text-danger'></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                    {{-- Modal Update Informasi --}}
-                                    <x-modal modalTitle="Update Informasi" modalID="updateInformasi" btn="Update"
-                                        action="" method="POST" method2="PUT" enctype="multipart/form-data">
-                                        <div class="row mb-3">
-                                            <div class="mt-3">
-                                                <div class="input-box col-sm-12">
-                                                    <label for="judul" class="mb-2 required">Judul
-                                                        Informasi</label>
-                                                    <input type="text" id="judul2" class="form-control" name="judul"
-                                                        placeholder="Masukkan Judul Informasi">
+                                        {{-- Modal Update Informasi --}}
+                                        <x-modal modalTitle="Update Informasi" modalID="updateInformasi" btn="Update"
+                                            action="" method="POST" method2="PUT" enctype="multipart/form-data">
+                                            <div class="row mb-3">
+                                                <div class="mt-3">
+                                                    <div class="input-box col-sm-12">
+                                                        <label for="judul" class="mb-2 required">Judul
+                                                            Informasi</label>
+                                                        <input type="text" id="judul2" class="form-control"
+                                                            name="judul" placeholder="Masukkan Judul Informasi">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <div class="input-box col-sm-12">
+                                                        <label for="tgl_post" class="mb-2 required">Tanggal
+                                                            Informasi</label>
+                                                        <input type="date" id="tgl_post2" class="form-control"
+                                                            name="tgl_post" placeholder="Masukkan Tanggal Informasi">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <div class="input-box col-sm-12">
+                                                        <label for="deskripsi" class="mb-2 required">Deskripsi
+                                                            Informasi</label>
+                                                        <textarea id="deskripsi2" class="form-control" name="deskripsi" placeholder="Masukkan Deskripsi Informasi"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <div class="input-box col-sm-12">
+                                                        <label for="gambar" class="mb-2 required">Gambar
+                                                            Informasi</label>
+                                                        <input type="file" id="gambar2" class="form-control"
+                                                            name="gambar" placeholder="Masukkan Gambar Informasi">
+                                                        <input type="hidden" name="oldImage" id="oldImage">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-3">
-                                                <div class="input-box col-sm-12">
-                                                    <label for="tgl_post" class="mb-2 required">Tanggal
-                                                        Informasi</label>
-                                                    <input type="date" id="tgl_post2" class="form-control"
-                                                        name="tgl_post" placeholder="Masukkan Tanggal Informasi">
-                                                </div>
-                                            </div>
-                                            <div class="mt-3">
-                                                <div class="input-box col-sm-12">
-                                                    <label for="deskripsi" class="mb-2 required">Deskripsi
-                                                        Informasi</label>
-                                                    <textarea id="deskripsi2" class="form-control" name="deskripsi"
-                                                        placeholder="Masukkan Deskripsi Informasi"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mt-3">
-                                                <div class="input-box col-sm-12">
-                                                    <label for="gambar" class="mb-2 required">Gambar
-                                                        Informasi</label>
-                                                    <input type="file" id="gambar2" class="form-control" name="gambar"
-                                                        placeholder="Masukkan Gambar Informasi">
-                                                    <input type="hidden" name="oldImage" id="oldImage">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </x-modal>
-                                    {{-- Modal Update Informasi --}}
+                                        </x-modal>
+                                        {{-- Modal Update Informasi --}}
                                     @endforeach
-                                    @endif
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -112,12 +112,12 @@
             <div class="mt-3">
                 <div class="input-box col-sm-12">
                     <label for="judul" class="mb-2 required">Judul Informasi</label>
-                    <input type="text" id="judul" class="form-control @error('judul') is-invalid @enderror" name="judul"
-                        placeholder="Masukkan Judul Informasi" value="{{ old('judul') }}">
+                    <input type="text" id="judul" class="form-control @error('judul') is-invalid @enderror"
+                        name="judul" placeholder="Masukkan Judul Informasi" value="{{ old('judul') }}">
                     @error('judul')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
                     @enderror
                 </div>
             </div>
@@ -127,21 +127,21 @@
                     <input type="date" id="tgl_post" class="form-control @error('tgl_post') is-invalid @enderror"
                         name="tgl_post" placeholder="Masukkan Tanggal Informasi" value="{{ old('tgl_post') }}">
                     @error('tgl_post')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
                     @enderror
                 </div>
             </div>
             <div class="mt-3">
                 <div class="input-box col-sm-12">
                     <label for="deskripsi" class="mb-2 required">Deskripsi Informasi</label>
-                    <textarea id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
-                        name="deskripsi" placeholder="Masukkan Deskripsi Informasi">{{ old('deskripsi') }}</textarea>
+                    <textarea id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi"
+                        placeholder="Masukkan Deskripsi Informasi">{{ old('deskripsi') }}</textarea>
                     @error('deskripsi')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
                     @enderror
                 </div>
             </div>
@@ -151,9 +151,9 @@
                     <input type="file" id="gambar" class="form-control @error('gambar') is-invalid @enderror"
                         name="gambar" placeholder="Masukkan Gambar Informasi" value="{{ old('gambar') }}">
                     @error('gambar')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
                     @enderror
                 </div>
             </div>
@@ -163,40 +163,40 @@
 
     {{-- Modal Error --}}
     @if (session('addInformasi'))
-    <script>
-        toastr.error("{{ Session::get('addInformasi') }}");
+        <script>
+            toastr.error("{{ Session::get('addInformasi') }}");
             $(document).ready(function() {
                 $('#addInformasi').modal('show');
             });
-    </script>
+        </script>
     @endif
 
     @if (session('updateInformasi'))
-    <script>
-        swal("Error!", "{{ Session::get('updateInformasi') }}", "error"), {
+        <script>
+            swal("Error!", "{{ Session::get('updateInformasi') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
             @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}");
             @endforeach
-    </script>
+        </script>
     @endif
 
     {{-- Alert --}}
     @if (Session::has('success'))
-    <script>
-        swal("Success!", "{{ Session::get('success') }}", "success"), {
+        <script>
+            swal("Success!", "{{ Session::get('success') }}", "success"), {
                 button: true,
                 button: 'ok'
             }
-    </script>
+        </script>
     @elseif (Session::has('error'))
-    <script>
-        swal("Error!", "{{ Session::get('error') }}", "error"), {
+        <script>
+            swal("Error!", "{{ Session::get('error') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
-    </script>
+        </script>
     @endif
 </x-layouts.main>
