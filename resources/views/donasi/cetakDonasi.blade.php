@@ -46,8 +46,7 @@
         </div>
         <p><strong>Telah melakukan donasi sebesar</strong></p>
         <div>
-            <table border="1"
-                style="width: 100%; margin-top: 20px; border-collapse: collapse; border: 1px solid #000;">
+            <table border="1" style="width: 100%; margin-top: 20px; border-collapse: collapse; border: 1px solid #000;">
                 <thead>
                     <tr>
                         <th style="text-align: left;">No</th>

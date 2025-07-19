@@ -1,8 +1,8 @@
 <x-layouts.main :title="$title" :mainPage="$main_page" :page="$page">
     @if (Session::has('toastSuccess'))
-        <script>
-            toastr.success("{{ Session::get('toastSuccess') }}");
-        </script>
+    <script>
+        toastr.success("{{ Session::get('toastSuccess') }}");
+    </script>
     @endif
     <!-- Left side columns -->
     <div class="col-lg-8">
@@ -118,23 +118,23 @@
 
                 <div class="activity">
                     @foreach ($riwayat_donasi as $item)
-                        <div class="activity-item d-flex">
-                            <div class="activite-label">{{ $item->created_at->diffForHumans() }}</div>
-                            <i class='bi bi-circle-fill activity-badge align-self-start'
-                                style="color: {{ $item->jenis_kas == 'kas masuk' ? '#33FF57' : '#f02233' }}"></i>
-                            <div class="activity-content d-flex flex-column">
-                                <span>
-                                    @if ($item->jenis_kas == 'kas masuk')
-                                        <strong>{{ $item->donasi->nama_donatur }}</strong> Memberi Donasi sebesar
-                                    @else
-                                        <strong>{{ $item->user->username }}</strong> Menggunakan Kas sebesar
-                                    @endif
-                                </span>
-                                <span class="text-muted small">Rp
-                                    {{ number_format($item->jumlah, 0, ',', '.') }}</span>
-                                <span class="text-muted small">{{ $item->keterangan }}</span>
-                            </div>
+                    <div class="activity-item d-flex">
+                        <div class="activite-label">{{ $item->created_at->diffForHumans() }}</div>
+                        <i class='bi bi-circle-fill activity-badge align-self-start'
+                            style="color: {{ $item->jenis_kas == 'kas masuk' ? '#33FF57' : '#f02233' }}"></i>
+                        <div class="activity-content d-flex flex-column">
+                            <span>
+                                @if ($item->jenis_kas == 'kas masuk')
+                                <strong>{{ $item->donasi->nama_donatur }}</strong> Memberi Donasi sebesar
+                                @else
+                                <strong>{{ $item->user->username }}</strong> Menggunakan Kas sebesar
+                                @endif
+                            </span>
+                            <span class="text-muted small">Rp
+                                {{ number_format($item->jumlah, 0, ',', '.') }}</span>
+                            <span class="text-muted small">{{ $item->keterangan }}</span>
                         </div>
+                    </div>
                     @endforeach
                 </div>
             </div>

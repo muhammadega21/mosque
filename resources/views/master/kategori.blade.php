@@ -25,44 +25,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($kategori) < 1)
-                                    <tr>
-                                        <td colspan="4" class="text-center">Data Kosong</td>
+                                @if (count($kategori) < 1) <tr>
+                                    <td colspan="4" class="text-center">Data Kosong</td>
                                     </tr>
-                                @else
+                                    @else
                                     @foreach ($kategori as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->nama_kategori }}</td>
-                                            <td>
-                                                <div class="d-flex gap-1">
-                                                    <button type="button" class="badge bg-light border-warning border"
-                                                        data-bs-toggle="modal" data-bs-target="#updateKategori"
-                                                        data-kategori="{{ $item }}">
-                                                        <span class="fw-semibold"><i
-                                                                class="bx bxs-edit text-warning"></i></span>
-                                                    </button>
-                                                    <a href="{{ url('kategori/delete/' . $item->id) }}"
-                                                        class="badge border-danger border" onclick="confirm(event)"><i
-                                                            class='bx bxs-trash text-danger'></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        {{-- Modal Update Kategori --}}
-                                        <x-modal modalTitle="Update Kategori" modalID="updateKategori" btn="Update"
-                                            action="" method="POST" method2="PUT" enctype="">
-                                            <div class="row mb-3">
-                                                <div class="input-box col-sm-12">
-                                                    <label for="nama_kategori2" class=" mb-2">Nama Kategori</label>
-                                                    <input type="text" id="nama_kategori2" class="form-control"
-                                                        name="nama_kategori" placeholder="Masukkan Nama Kategori">
-                                                </div>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_kategori }}</td>
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                <button type="button" class="badge bg-light border-warning border"
+                                                    data-bs-toggle="modal" data-bs-target="#updateKategori"
+                                                    data-kategori="{{ $item }}">
+                                                    <span class="fw-semibold"><i
+                                                            class="bx bxs-edit text-warning"></i></span>
+                                                </button>
+                                                <a href="{{ url('kategori/delete/' . $item->id) }}"
+                                                    class="badge border-danger border" onclick="confirm(event)"><i
+                                                        class='bx bxs-trash text-danger'></i></a>
                                             </div>
-                                        </x-modal>
-                                        {{-- Modal Update Kategori --}}
+                                        </td>
+                                    </tr>
+
+                                    {{-- Modal Update Kategori --}}
+                                    <x-modal modalTitle="Update Kategori" modalID="updateKategori" btn="Update"
+                                        action="" method="POST" method2="PUT" enctype="">
+                                        <div class="row mb-3">
+                                            <div class="input-box col-sm-12">
+                                                <label for="nama_kategori2" class=" mb-2">Nama Kategori</label>
+                                                <input type="text" id="nama_kategori2" class="form-control"
+                                                    name="nama_kategori" placeholder="Masukkan Nama Kategori">
+                                            </div>
+                                        </div>
+                                    </x-modal>
+                                    {{-- Modal Update Kategori --}}
                                     @endforeach
-                                @endif
+                                    @endif
                             </tbody>
                         </table>
                     </div>
@@ -82,9 +81,9 @@
                         class="form-control @error('nama_kategori') is-invalid @enderror" name="nama_kategori"
                         placeholder="Masukkan Nama Kategori" value="{{ old('nama_kategori') }}">
                     @error('nama_kategori')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                     @enderror
                 </div>
             </div>
@@ -95,40 +94,40 @@
 
     {{-- Modal Error --}}
     @if (session('addKategori'))
-        <script>
-            toastr.error("{{ Session::get('addKategori') }}");
+    <script>
+        toastr.error("{{ Session::get('addKategori') }}");
             $(document).ready(function() {
                 $('#addKategori').modal('show');
             });
-        </script>
+    </script>
     @endif
 
     @if (session('updateKategori'))
-        <script>
-            swal("Error!", "{{ Session::get('updateKategori') }}", "error"), {
+    <script>
+        swal("Error!", "{{ Session::get('updateKategori') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
             @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}");
             @endforeach
-        </script>
+    </script>
     @endif
 
     {{-- Alert --}}
     @if (Session::has('success'))
-        <script>
-            swal("Success!", "{{ Session::get('success') }}", "success"), {
+    <script>
+        swal("Success!", "{{ Session::get('success') }}", "success"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @elseif (Session::has('error'))
-        <script>
-            swal("Error!", "{{ Session::get('error') }}", "error"), {
+    <script>
+        swal("Error!", "{{ Session::get('error') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @endif
 </x-layouts.main>

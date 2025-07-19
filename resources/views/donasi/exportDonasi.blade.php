@@ -43,16 +43,16 @@
         </thead>
         <tbody>
             @php
-                $no = 1;
+            $no = 1;
             @endphp
             @foreach ($donasi->sortBy('tanggal') as $index => $item)
-                <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ date('d F Y', strtotime($item->tanggal)) }}</td>
-                    <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
-                    <td>{{ $item->keterangan }}</td>
-                    <td>{{ $item->status_transaksi }}</td>
-                </tr>
+            <tr>
+                <td>{{ $no++ }}</td>
+                <td>{{ date('d F Y', strtotime($item->tanggal)) }}</td>
+                <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
+                <td>{{ $item->keterangan }}</td>
+                <td>{{ $item->status_transaksi }}</td>
+            </tr>
             @endforeach
             <tr>
                 <td colspan="2" style="text-align: right;"><strong>Total:</strong></td>

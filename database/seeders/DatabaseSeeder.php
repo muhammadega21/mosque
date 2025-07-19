@@ -17,12 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-
-        // Hidupkan baris dibawah ini jika ingin mengisi data dummy untuk tabel KasMasjid.
-
-        // KasMasjid::factory()->count(50)->create(); 
-
         User::create([
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
@@ -30,7 +24,6 @@ class DatabaseSeeder extends Seeder
             'username' => 'Admin',
             'nomor_hp' => '081234567890',
         ]);
-
 
         Kategori::create([
             'nama_kategori' => 'Donasi',
@@ -89,5 +82,8 @@ class DatabaseSeeder extends Seeder
             'gambar' => 'informasi_masjid/ceramah2.jpg',
             'user_id' => 1
         ]);
+
+        //Hidupkan baris dibawah ini jika ingin mengisi data dummy untuk tabel KasMasjid.
+        // KasMasjid::factory()->count(50)->create();
     }
 }

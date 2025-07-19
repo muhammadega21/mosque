@@ -56,8 +56,8 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                     @if ($mainPage)
-                        <li class="breadcrumb-item"><a
-                                href="{{ url('/' . Str::lower($mainPage)) }}">{{ $mainPage }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/' . Str::lower($mainPage)) }}">{{ $mainPage }}</a>
+                    </li>
                     @endif
                     <li class="breadcrumb-item active">{{ $page }}</li>
                 </ol>

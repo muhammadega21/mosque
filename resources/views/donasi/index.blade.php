@@ -36,39 +36,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($donasi) < 1)
-                                    <tr>
-                                        <td colspan="9" class="text-center">Data Kosong</td>
+                                @if (count($donasi) < 1) <tr>
+                                    <td colspan="9" class="text-center">Data Kosong</td>
                                     </tr>
-                                @else
+                                    @else
                                     @foreach ($donasi as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration + $donasi->firstItem() - 1 }}</td>
-                                            <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
-                                            <td>{{ $item->keterangan }}</td>
-                                            <td>{{ $item->status_transaksi }}</td>
-                                            <td>{{ $item->tanggal }}</td>
-                                            <td>
-                                                <div class="d-flex gap-1">
-                                                    @if ($item->kategori_id == 2)
-                                                        <button type="button"
-                                                            class="badge bg-light border-primary border"
-                                                            data-bs-toggle="modal" data-bs-target="#cekBuktiBayar"
-                                                            data-image="{{ asset('/storage/' . $item->gambar) }}"><i
-                                                                class="bx bxs-show text-primary"></i></button>
-                                                    @else
-                                                        <a href="{{ url('donasi/cetak/' . encrypt($item->id)) }}"
-                                                            target="_blank" class="badge bg-light border-danger border">
-                                                            <span class="fw-bold text-danger"><i
-                                                                    class="bx bxs-file-pdf"></i>Cetak</span>
-                                                        </a>
-                                                    @endif
+                                    <tr>
+                                        <td>{{ $loop->iteration + $donasi->firstItem() - 1 }}</td>
+                                        <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
+                                        <td>{{ $item->keterangan }}</td>
+                                        <td>{{ $item->status_transaksi }}</td>
+                                        <td>{{ $item->tanggal }}</td>
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                @if ($item->kategori_id == 2)
+                                                <button type="button" class="badge bg-light border-primary border"
+                                                    data-bs-toggle="modal" data-bs-target="#cekBuktiBayar"
+                                                    data-image="{{ asset('/storage/' . $item->gambar) }}"><i
+                                                        class="bx bxs-show text-primary"></i></button>
+                                                @else
+                                                <a href="{{ url('donasi/cetak/' . encrypt($item->id)) }}"
+                                                    target="_blank" class="badge bg-light border-danger border">
+                                                    <span class="fw-bold text-danger"><i
+                                                            class="bx bxs-file-pdf"></i>Cetak</span>
+                                                </a>
+                                                @endif
 
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     @endforeach
-                                @endif
+                                    @endif
                             </tbody>
                         </table>
                     </div>
@@ -123,9 +121,9 @@
                     <input type="number" id="jumlah" class="form-control @error('jumlah') is-invalid @enderror"
                         name="jumlah" placeholder="Masukkan Jumlah Donasi" value="{{ old('jumlah') }}">
                     @error('jumlah')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                     @enderror
                 </div>
             </div>
@@ -135,37 +133,37 @@
 
     {{-- Modal Error --}}
     @if (session('addDonasi'))
-        <script>
-            toastr.error("{{ Session::get('addDonasi') }}");
+    <script>
+        toastr.error("{{ Session::get('addDonasi') }}");
             $(document).ready(function() {
                 $('#addDonasi').modal('show');
             });
-        </script>
+    </script>
     @endif
     @if (session('addSaldo'))
-        <script>
-            toastr.error("{{ Session::get('addSaldo') }}");
+    <script>
+        toastr.error("{{ Session::get('addSaldo') }}");
             $(document).ready(function() {
                 $('#addSaldo').modal('show');
             });
-        </script>
+    </script>
     @endif
 
     @if (session('updateDonasi'))
-        <script>
-            swal("Error!", "{{ Session::get('updateDonasi') }}", "error"), {
+    <script>
+        swal("Error!", "{{ Session::get('updateDonasi') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
             @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}");
             @endforeach
-        </script>
+    </script>
     @endif
 
     @if (session('confirmCetak') && session('transaksi_id'))
-        <script>
-            const url = "{{ url('donasi/cetak/') }}/{{ session('transaksi_id') }}"
+    <script>
+        const url = "{{ url('donasi/cetak/') }}/{{ session('transaksi_id') }}"
             swal({
                 title: 'Donasi Berhasil!',
                 text: "{{ session('confirmCetak') }}",
@@ -179,24 +177,24 @@
                     window.open(url, '_blank');
                 }
             });
-        </script>
+    </script>
     @endif
 
     {{-- Alert --}}
     @if (Session::has('success'))
-        <script>
-            swal("Success!", "{{ Session::get('success') }}", "success"), {
+    <script>
+        swal("Success!", "{{ Session::get('success') }}", "success"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @elseif (Session::has('error'))
-        <script>
-            swal("Error!", "{{ Session::get('error') }}", "error"), {
+    <script>
+        swal("Error!", "{{ Session::get('error') }}", "error"), {
                 button: true,
                 button: 'ok'
             }
-        </script>
+    </script>
     @endif
 
 </x-layouts.main>
