@@ -110,10 +110,12 @@ class KasMasjidController extends Controller
     {
         $kas = KasMasjid::find($id);
         if ($kas) {
-            if ($kas->donasi->gambar) {
-                Storage::delete($kas->donasi->gambar);
+            if ($kas->donasi_id) {
+                if ($kas->donasi->gambar) {
+                    Storage::delete($kas->donasi->gambar);
+                }
+                BuktiDonasi::where('id', $kas->donasi_id)->delete();
             }
-            BuktiDonasi::where('id', $kas->donasi_id)->delete();
             $kas->delete();
             return redirect('/kas_masjid')->with('success', 'Berhasil Menghapus Kas Masjid');
         }

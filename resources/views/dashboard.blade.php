@@ -124,7 +124,7 @@
                                 style="color: {{ $item->jenis_kas == 'kas masuk' ? '#33FF57' : '#f02233' }}"></i>
                             <div class="activity-content d-flex flex-column">
                                 <span>
-                                    @if ($item->jenis_kas == 'kas masuk')
+                                    @if ($item->donasi_id)
                                         <strong>{{ $item->donasi->nama_donatur }}</strong> Memberi Donasi sebesar
                                     @else
                                         <strong>Pengurus</strong> Menggunakan Kas sebesar
