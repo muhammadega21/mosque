@@ -29,16 +29,13 @@ class DatabaseSeeder extends Seeder
             'nama_kategori' => 'Donasi',
         ]);
         Kategori::create([
-            'nama_kategori' => 'Operasional Masjid',
+            'nama_kategori' => 'Infaq Masjid',
         ]);
         Kategori::create([
-            'nama_kategori' => 'Perawatan Masjid',
+            'nama_kategori' => 'Infaq Jumat',
         ]);
         Kategori::create([
-            'nama_kategori' => 'Kegiatan Sosial',
-        ]);
-        Kategori::create([
-            'nama_kategori' => 'Honorarium',
+            'nama_kategori' => 'Zakat',
         ]);
         Kategori::create([
             'nama_kategori' => 'Pembayaran Listrik & Air',

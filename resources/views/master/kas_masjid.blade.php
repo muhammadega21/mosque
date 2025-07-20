@@ -44,10 +44,10 @@
                                             <td>Rp {{ number_format($item->jumlah, 2, ',', '.') }}</td>
                                             <td>{{ $item->keterangan }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                                            @if ($item->jenis_kas == 'kas masuk')
+                                            @if ($item->donasi_id)
                                                 <td>{{ $item->donasi->nama_donatur }}</td>
                                             @else
-                                                <td>{{ $item->user->username }}</td>
+                                                <td>Pengurus</td>
                                             @endif
                                             <td>
                                                 @if ($item->status_validasi == 'pending')
@@ -58,7 +58,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-1">
-                                                    @if ($item->jenis_kas == 'kas masuk' && $item->donasi)
+                                                    @if ($item->donasi_id && $item->donasi)
                                                         @if ($item->status_validasi == 'selesai')
                                                             <button type="button"
                                                                 class="badge bg-light border-primary border"
@@ -109,8 +109,7 @@
                                                 <div class="input-group justify-content-between mt-3">
                                                     <div class="input-box col-sm-6" style="max-width: 48%">
                                                         <label class="mb-2 required">Jenis Kas</label>
-                                                        <select class="form-select" id="jenis_kas2" name="jenis_kas"
-                                                            disabled>
+                                                        <select class="form-select" id="jenis_kas2" name="jenis_kas">
                                                             <option value="kas keluar">Kas Masuk</option>
                                                             <option value="kas keluar">Kas Keluar</option>
                                                         </select>
@@ -168,7 +167,11 @@
                 <div class="input-box col-sm-6" style="max-width: 48%">
                     <label class="mb-2 required">Jenis Kas</label>
                     <select class="form-select @error('jenis_kas') is-invalid @enderror" name="jenis_kas">
-                        <option selected value="kas keluar">Kas Keluar</option>
+                        <option selected value="">- Pilih Jenis Kas -</option>
+                        <option value="kas masuk" @if (old('jenis_kas') == 'kas masuk') selected @endif>
+                            Kas Masuk</option>
+                        <option value="kas keluar" @if (old('jenis_kas') == 'kas keluar') selected @endif>
+                            Kas Keluar</option>
                     </select>
                     @error('jenis_kas')
                         <div class="invalid-feedback">

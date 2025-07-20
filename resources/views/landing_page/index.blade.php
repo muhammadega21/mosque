@@ -176,7 +176,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->jenis_kas }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $item->kategori->nama_kategori }}
                                         </td>
-                                        @if ($item->jenis_kas == 'kas masuk')
+                                        @if ($item->donasi_id)
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $item->donasi->nama_donatur }}
                                             </td>
                                         @else

@@ -20,6 +20,7 @@ class KasMasjidController extends Controller
             'page' => 'Kas Masjid',
             'kas_masjid' => KasMasjid::orderByRaw("FIELD(status_validasi, 'pending', 'selesai')")
                 ->orderBy('tanggal', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->paginate(15),
             'kategori' => Kategori::all(),
         ]);

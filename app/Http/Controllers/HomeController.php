@@ -65,7 +65,7 @@ class HomeController extends Controller
         $total_user = User::all()->count();
         $kegiatan_masjid = InformasiMasjid::latest()->where('kategori', 'kegiatan')->take(6);
         $informasi_masjid = InformasiMasjid::latest()->where('kategori', 'informasi')->take(6);
-        $kas_masjid = KasMasjid::where('status_validasi', 'selesai')->orderBy('tanggal', 'desc')
+        $kas_masjid = KasMasjid::where('status_validasi', 'selesai')->orderBy('tanggal', 'desc')->orderBy('created_at', 'desc')
             ->take(10);
 
         return view('landing_page.index', [
