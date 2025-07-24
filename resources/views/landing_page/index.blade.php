@@ -161,32 +161,31 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @if (count($kas_masjid) < 1)
-                                <tr>
-                                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
-                                        Data Kosong</td>
+                            @if (count($kas_masjid) < 1) <tr>
+                                <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                                    Data Kosong</td>
                                 </tr>
-                            @else
+                                @else
                                 @foreach ($kas_masjid as $item)
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ $loop->iteration }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->jenis_kas }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $item->kategori->nama_kategori }}
-                                        </td>
-                                        @if ($item->donasi_id)
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $item->donasi->nama_donatur }}
-                                            </td>
-                                        @else
-                                            <td class="px-6 py-4 whitespace-nowrap">Pengurus</td>
-                                        @endif
-                                        <td class="px-6 py-4 whitespace-nowrap">Rp
-                                            {{ number_format($item->jumlah, 2, ',', '.') }}</td>
-                                    </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ $loop->iteration }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->jenis_kas }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->kategori->nama_kategori }}
+                                    </td>
+                                    @if ($item->donasi_id)
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->donasi->nama_donatur }}
+                                    </td>
+                                    @else
+                                    <td class="px-6 py-4 whitespace-nowrap">Pengurus</td>
+                                    @endif
+                                    <td class="px-6 py-4 whitespace-nowrap">Rp
+                                        {{ number_format($item->jumlah, 2, ',', '.') }}</td>
+                                </tr>
                                 @endforeach
-                            @endif
+                                @endif
                         </tbody>
                     </table>
                 </div>
@@ -201,22 +200,22 @@
             <h1 class="text-4xl font-bold text-gray-800 text-center">Kegiatan Masjid</h1>
             <div class="grid grid-cols-3 mt-10 gap-y-10 gap-x-5 items-start">
                 @foreach ($kegiatan_masjid as $data)
-                    <div
-                        class="kegiatan-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
-                        <div class="kegiatan-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
-                            <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Kegiatan Masjid"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="kegiatan-card-content text-center mt-5 px-4 pb-10 relative w-full">
-                            <div class="mb-8">
-                                <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
-                                <p class="text-base text-gray-600 mt-2 text-center">{{ $data->deskripsi }}</p>
-                            </div>
-                            <button type="button"
-                                class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
-                                Detail</a>
-                        </div>
+                <div
+                    class="kegiatan-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
+                    <div class="kegiatan-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
+                        <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Kegiatan Masjid"
+                            class="w-full h-full object-cover">
                     </div>
+                    <div class="kegiatan-card-content text-center mt-5 px-4 pb-10 relative w-full">
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
+                            <p class="text-base text-gray-600 mt-2 text-center">{{ $data->deskripsi }}</p>
+                        </div>
+                        <button type="button"
+                            class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
+                            Detail</a>
+                    </div>
+                </div>
                 @endforeach
             </div>
         </section>
@@ -229,22 +228,22 @@
             <h1 class="text-4xl font-bold text-gray-800 text-center">Informasi Masjid</h1>
             <div class="grid grid-cols-3 mt-10 gap-y-10 gap-x-5 items-start">
                 @foreach ($informasi_masjid as $data)
-                    <div
-                        class="informasi-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
-                        <div class="informasi-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
-                            <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Informasi Masjid"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="informasi-card-content text-center mt-5 px-4 pb-10 relative w-full">
-                            <div class="mb-8">
-                                <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
-                                <p class="text-base text-gray-600 mt-2 text-justify">{{ $data->deskripsi }}</p>
-                            </div>
-                            <button type="button"
-                                class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
-                                Detail</a>
-                        </div>
+                <div
+                    class="informasi-card flex flex-col items-center justify-center bg-white shadow-[0px_6px_15px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden">
+                    <div class="informasi-card-image w-full h-[300px] overflow-hidden rounded-t-xl">
+                        <img src="{{ asset('/storage/' . $data->gambar) }}" alt="Informasi Masjid"
+                            class="w-full h-full object-cover">
                     </div>
+                    <div class="informasi-card-content text-center mt-5 px-4 pb-10 relative w-full">
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold text-gray-800">{{ $data->judul }}</h2>
+                            <p class="text-base text-gray-600 mt-2 text-justify">{{ $data->deskripsi }}</p>
+                        </div>
+                        <button type="button"
+                            class="font-semibold absolute bottom-0 left-0 right-0 py-4 text-center bg-[#019961] text-white hover:bg-[#249b6f] transition duration-200 ">Lihat
+                            Detail</a>
+                    </div>
+                </div>
                 @endforeach
             </div>
         </section>
@@ -252,38 +251,38 @@
 
         {{-- Alert --}}
         @if (Session::has('success'))
-            <script>
-                swal("Success!", "{{ Session::get('success') }}", "success"), {
+        <script>
+            swal("Success!", "{{ Session::get('success') }}", "success"), {
                     button: true,
                     button: 'ok'
                 }
-            </script>
+        </script>
         @elseif (Session::has('error'))
-            <script>
-                swal("Error!", "{{ Session::get('error') }}", "error"), {
+        <script>
+            swal("Error!", "{{ Session::get('error') }}", "error"), {
                     button: true,
                     button: 'ok'
                 }
-            </script>
+        </script>
         @endif
 
         <script>
             // Bank account data
             const bankAccounts = {
                 bri: {
-                    noRek: '1234-5678-9012-3456',
+                    noRek: '0001-01-011822-53-4',
                     name: 'Masjid Al-Hamujirin'
                 },
                 bca: {
-                    noRek: '9876-5432-1098-7654',
+                    noRek: '460-141-3127',
                     name: 'Masjid Al-Hamujirin'
                 },
                 mandiri: {
-                    noRek: '5678-1234-9012-3456',
+                    noRek: '111-33-0927425-9',
                     name: 'Masjid Al-Hamujirin'
                 },
                 bsi: {
-                    noRek: '3456-7890-1234-5678',
+                    noRek: '456-01-23456',
                     name: 'Masjid Al-Hamujirin'
                 }
             };
