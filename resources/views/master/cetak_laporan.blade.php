@@ -17,13 +17,23 @@
             margin: 0;
         }
 
+        .header {
+            margin-top: 1.5rem;
+            margin-bottom: 20px
+        }
+
         .periode {
             text-align: center;
-            margin-top: 20px;
             padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .info {
+            text-align: left;
+            margin-top: 10px;
+            margin-left: 20px
         }
 
         table {
@@ -84,17 +94,26 @@
 <body onload="window.print()">
 
     <h2>Laporan Keuangan Masjid Al-Hamujirin</h2>
+    <div class="header">
+        <div class="periode">
+            @if ($laporan->laporan_periodik == 'hari')
+                <span>Tanggal: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d F Y') }}</span>
+            @elseif ($laporan->laporan_periodik == 'minggu')
+                <span>Minggu: {{ \Carbon\Carbon::parse($laporan->tanggal)->startOfWeek()->translatedFormat('d F Y') }} -
+                    {{ \Carbon\Carbon::parse($laporan->tanggal)->endOfWeek()->translatedFormat('d F Y') }}</span>
+            @elseif ($laporan->laporan_periodik == 'bulan')
+                <span>Bulan: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('F Y') }}</span>
+            @elseif ($laporan->laporan_periodik == 'tahun')
+                <span>Tahun: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('Y') }}</span>
+            @else
+                <span>Periode tidak valid</span>
+            @endif
+            <span>Tanggal Cetak : {{ now()->locale('id_ID')->translatedFormat('d F Y') }}</span>
+        </div>
 
-    <div class="periode">
-        @if ($laporan->laporan_periodik == 'hari')
-            <p>Tanggal: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d F Y') }}</p>
-        @elseif ($laporan->laporan_periodik == 'minggu')
-            <p>Minggu: {{ \Carbon\Carbon::parse($laporan->tanggal)->startOfWeek()->translatedFormat('d F Y') }} -
-                {{ \Carbon\Carbon::parse($laporan->tanggal)->endOfWeek()->translatedFormat('d F Y') }}</p>
-        @elseif ($laporan->laporan_periodik == 'bulan')
-            <p>Bulan: {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('F Y') }}</p>
-        @endif
-        <p>Tanggal Cetak : {{ now()->locale('id_ID')->translatedFormat('d F Y') }}</p>
+        <div class="info">
+            <span>Kategori : {{ $laporan->kategori->nama_kategori }}</span>
+        </div>
     </div>
 
 

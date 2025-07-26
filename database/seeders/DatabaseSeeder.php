@@ -81,6 +81,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Hidupkan baris dibawah ini jika ingin mengisi data dummy untuk tabel KasMasjid.
-        // KasMasjid::factory()->count(50)->create();
+        KasMasjid::factory()->count(50)->create();
     }
 }

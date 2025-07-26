@@ -24,7 +24,7 @@ class KasMasjidFactory extends Factory
 
         $kategori_id = 1;
         if ($jenis === 'kas keluar') {
-            $kategori_id = $this->faker->randomElement([2, 3, 4, 5, 6, 7]);
+            $kategori_id = $this->faker->randomElement([2, 3, 4, 5, 6]);
         }
 
         return [

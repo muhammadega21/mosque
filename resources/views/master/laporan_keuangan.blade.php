@@ -69,9 +69,18 @@
                     <option value="hari">Harian</option>
                     <option value="minggu">Mingguan</option>
                     <option value="bulan">Bulanan</option>
+                    <option value="tahun">Tahun</option>
                 </select>
             </div>
-
+            <div class="mt-3">
+                <label for="kategori" class="form-label">Pilih Kategori</label>
+                <select id="kategori" name="kategori" class="form-select" required>
+                    <option value="semua" selected>Semua Kategori</option>
+                    @foreach ($kategori as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="mt-3">
                 <label for="tanggal" class="form-label">Pilih Tanggal</label>
                 <input type="date" name="tanggal" id="tanggal" class="form-control" required>
@@ -119,6 +128,9 @@
                     });
                     const tahun = selectedDate.getFullYear();
                     text = `Bulan: ${bulan} ${tahun}`;
+                } else if (periode === 'tahun') {
+                    const tahun = selectedDate.getFullYear();
+                    text = `Tahun: ${tahun}`;
                 }
 
                 infoTanggal.textContent = text;
